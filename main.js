@@ -18,10 +18,10 @@ let mainWindow
 
 function createWindow() {
   mainWindow = new BrowserWindow({ width: 800, height: 600 })
-  mainWindow.loadURL('http://0.0.0.0:1997/main.html')
+  mainWindow.loadURL('http://0.0.0.0:1997/index.html')
 
   // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
+  mainWindow.webContents.openDevTools()
 
   mainWindow.on('closed', () => {
     mainWindow = null
