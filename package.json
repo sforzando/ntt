@@ -14,9 +14,11 @@
     "productName": "Numbered Ticket Terminal",
     "appId": "jp.co.sforzando.ntt",
     "mac": {
-      "target": "pkg"
+      "icon": "build/icons/ntt.icns",
+      "target": "dmg"
     },
     "win": {
+      "icon": "build/icons/ntt.ico",
       "target": "nsis"
     },
     "directories": {

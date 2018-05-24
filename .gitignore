@@ -136,7 +136,7 @@ jsconfig.json
 
 ### Electron ###
 dist/
-build/
+build/*
 !build/icons
 !.gitkeep
 
