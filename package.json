@@ -36,9 +36,11 @@
     "prettier-eslint-cli": "^4.7.1"
   },
   "scripts": {
-    "clean": "",
+    "clean": "echo \"Error: no clean command specified\" && exit 1",
     "build": "npm run build:mac",
     "build:mac": "electron-builder --mac --x64",
+    "build:lecture":
+      "electron-builder --mac --x64 -c.mac.icon=build/icons/ntt-lecture.icns",
     "build:win": "electron-builder --win --x64",
     "format": "prettier-eslint \"src/**/*.js\"",
     "start": "electron .",

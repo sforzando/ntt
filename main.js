@@ -12,13 +12,13 @@ HTTP.createServer((request, response) => {
       file.serve(request, response)
     })
     .resume()
-}).listen(3000, '0.0.0.0')
+}).listen(1997, '0.0.0.0')
 
 let mainWindow
 
 function createWindow() {
   mainWindow = new BrowserWindow({ width: 800, height: 600 })
-  mainWindow.loadURL('http://0.0.0.0:3000/index.html')
+  mainWindow.loadURL('http://0.0.0.0:1997/main.html')
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
