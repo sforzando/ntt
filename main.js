@@ -17,13 +17,25 @@ HTTP.createServer((request, response) => {
 let mainWindow
 
 function createWindow() {
-  mainWindow = new BrowserWindow({ width: 800, height: 600 })
+  mainWindow = new BrowserWindow({
+    acceptFirstMouse: true,
+    allowRunningInsecureContent: true,
+    alwaysOnTop: true,
+    fullscreen: true,
+    frame: false,
+    kiosk: true,
+    title: 'Numbered Ticket Terminal',
+    webSecurity: false
+  })
   mainWindow.loadURL('http://0.0.0.0:1997/index.html')
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools()
 
   mainWindow.on('closed', () => {
+    Electron.session.defaultSession.clearCache(() => {
+      console.log('Electron.session.defaultSession.clearCache()')
+    })
     mainWindow = null
   })
 }

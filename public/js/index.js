@@ -1,3 +1,3 @@
-window.addEventListener('keyup', (e)=> {
-  console.log(e.keyCode)
+window.addEventListener('keyup', e => {
+  console.log('keyCode: ', e.keyCode)
 })
