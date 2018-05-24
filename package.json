@@ -30,9 +30,12 @@
     "prettier-eslint-cli": "^4.7.1"
   },
   "scripts": {
+    "clean": "",
+    "build": "npm run build:mac",
+    "build:mac": "electron-builder --mac --x64",
+    "format": "prettier-eslint \"src/**/*.js\"",
     "start": "electron .",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "format": "prettier-eslint \"src/**/*.js\"",
     "precommit": "lint-staged"
   },
   "lint-staged": {
