@@ -29,8 +29,10 @@ function createWindow() {
   })
   mainWindow.loadURL('http://0.0.0.0:1997/index.html')
 
-  // Open the DevTools.
-  mainWindow.webContents.openDevTools()
+  if (!process.env.CI && !(process.env.NODE_ENV === 'production')) {
+    // Open the DevTools
+    mainWindow.webContents.openDevTools()
+  }
 
   mainWindow.on('closed', () => {
     Electron.session.defaultSession.clearCache(() => {
