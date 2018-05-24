@@ -1,37 +1,41 @@
 {
-    "name": "ntt",
-    "version": "1.0.0",
-    "description": "Numbered Ticket Terminal",
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/sforzando/ntt.git"
+  "name": "ntt",
+  "version": "1.0.0",
+  "description": "Numbered Ticket Terminal",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sforzando/ntt.git"
+  },
+  "main": "main.js",
+  "keywords": ["electron"],
+  "author": "sforzando LLC.",
+  "license": "MIT",
+  "build": {
+    "appId": "jp.co.sforzando.ntt",
+    "mac": {
+      "target": "pkg"
     },
-    "main": "main.js",
-    "keywords": [
-        "electron"
-    ],
-    "author": "sforzando LLC.",
-    "license": "MIT",
-    "dependencies": {
-        "electron": "^2.0.2",
-        "node-static": "^0.7.10"
-    },
-    "devDependencies": {
-        "electron-builder": "^20.14.7",
-        "husky": "^0.14.3",
-        "lint-staged": "^7.1.2",
-        "prettier-eslint-cli": "^4.7.1"
-    },
-    "scripts": {
-        "start": "electron .",
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "format": "prettier-eslint \"src/**/*.js\"",
-        "precommit": "lint-staged"
-    },
-    "lint-staged": {
-        "*.js": [
-            "prettier-eslint --write",
-            "git add"
-        ]
+    "directories": {
+      "output": "build"
     }
+  },
+  "dependencies": {
+    "node-static": "^0.7.10"
+  },
+  "devDependencies": {
+    "electron": "^2.0.2",
+    "electron-builder": "^20.14.7",
+    "husky": "^0.14.3",
+    "lint-staged": "^7.1.2",
+    "prettier-eslint-cli": "^4.7.1"
+  },
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "format": "prettier-eslint \"src/**/*.js\"",
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.js": ["prettier-eslint --write", "git add"]
+  }
 }
