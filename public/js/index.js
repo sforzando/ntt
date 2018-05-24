@@ -1,3 +1,3 @@
 window.addEventListener('keyup', e => {
-  console.log('keyCode: ', e.keyCode)
+  console.log('code: ', e.code) // like 'keyA'
 })
