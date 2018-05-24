@@ -11,9 +11,13 @@
   "author": "sforzando LLC.",
   "license": "MIT",
   "build": {
+    "productName": "Numbered Ticket Terminal",
     "appId": "jp.co.sforzando.ntt",
     "mac": {
       "target": "pkg"
+    },
+    "win": {
+      "target": "nsis"
     },
     "directories": {
       "output": "build"
@@ -33,6 +37,7 @@
     "clean": "",
     "build": "npm run build:mac",
     "build:mac": "electron-builder --mac --x64",
+    "build:win": "electron-builder --win --x64",
     "format": "prettier-eslint \"src/**/*.js\"",
     "start": "electron .",
     "test": "echo \"Error: no test specified\" && exit 1",
