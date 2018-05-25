@@ -1,0 +1,34 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  cursor: none;
+}
+
+.box {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+
+  /* 左右中央寄せ */
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+
+  /* 上下中央寄せ */
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+
+  box-sizing: border-box;
+
+  width: 100vw;
+  height: auto;
+  min-height: 100vh;
+
+  background-size: cover;
+  background-position: center;
+  background-image: url('//0.0.0.0:1997/image/index_background.png');
+}

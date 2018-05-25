@@ -1,37 +1,39 @@
 osx_image: xcode8.3
-sudo: required
+
 dist: trusty
-language: c
-matrix:
-  include:
-    - os: osx
-    - os: linux
-        env: 'CC=clang CXX=clang++ npm_config_clang=1'
-        compiler: clang
+sudo: false
+
+language: node_js
+node_js: "8"
+
+env:
+  global:
+    - ELECTRON_CACHE=$HOME/.cache/electron
+    - ELECTRON_BUILDER_CACHE=$HOME/.cache/electron-builder
+
+os:
+  - osx
+
 cache:
   directories:
-    - node_modules
-    - $HOME/.electron
-    - $HOME/.cache
-addons:
-  apt:
-    packages:
-      - libgnome-keyring-dev
-      - icnsutils
-      - xvfb
+  - node_modules
+  - $HOME/.cache/electron
+  - $HOME/.cache/electron-builder
+  - $HOME/.npm/_prebuilds
+
 before_install:
-  - "mkdir -p /tmp/git-lfs && curl -L https://github.com/github/git-lfs/releases/download/v1.2.1/git-lfs-$([\n\"$TRAVIS_OS_NAME\" == \"linux\" ] && echo \"linux\" || echo \"darwin\")-amd64-1.2.1.tar.gz\n| tar -xz -C /tmp/git-lfs --strip-components 1 && /tmp/git-lfs/git-lfs pull"
-  - 'if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install --no-install-recommends -y icnsutils graphicsmagick xz-utils; fi'
+  - brew install git-lfs
+  - npm install -g yarn
+
 install:
-  - 'export DISPLAY='':99.0'''
-  - 'Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &'
-  - 'nvm install 7'
-  - 'curl -o- -L https://yarnpkg.com/install.sh | bash'
-  - 'source ~/.bashrc'
-  - 'npm install -g xvfb-maybe'
-  - yarn
+  - npm install
+
 script:
-  - 'yarn run build:mac'
+  - npm run build:mac
+
+before_cache:
+  - rm -rf $HOME/.cache/electron-builder/wine
+
 branches:
-  only:
-    - master
+  except:
+    - "/^v\\d+\\.\\d+\\.\\d+$/"
