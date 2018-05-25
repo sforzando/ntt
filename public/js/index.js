@@ -1,8 +1,11 @@
 const { ipcRenderer } = require('electron')
+const log = require('electron-log')
+
 ipcRenderer.on('asynchronous-reply', (event, arg) => {
-  console.log(arg) // prints "pong"
+  log.info(arg)
 })
+
 window.addEventListener('keyup', e => {
-  console.log('code: ', e.code) // like 'keyA'
+  log.info('code: ', e.code) // like 'keyA'
   ipcRenderer.send('asynchronous-message', e.code)
 })
