@@ -25,10 +25,10 @@ before_install:
   - brew install git-lfs
 
 install:
-  - yarn
+  - npm install
 
 script:
-  - yarn run build:mac
+  - npm run build:mac
 
 before_cache:
   - rm -rf $HOME/.cache/electron-builder/wine
