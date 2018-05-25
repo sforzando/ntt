@@ -23,6 +23,7 @@ cache:
 
 before_install:
   - brew install git-lfs
+  - npm install -g yarn
 
 install:
   - npm install
