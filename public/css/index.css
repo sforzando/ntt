@@ -7,7 +7,7 @@ body {
   cursor: none;
 }
 
-.box {
+.background {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;

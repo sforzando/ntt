@@ -1,4 +1,6 @@
-const { app, BrowserWindow, ipcMain, Electron } = require('electron')
+const { app, BrowserWindow, ipcMain, powerSaveBlocker } = require('electron')
+const log = require('electron-log')
+
 const HTTP = require('http')
 const NodeStatic = require('node-static')
 
@@ -11,6 +13,8 @@ HTTP.createServer((request, response) => {
     .resume()
 }).listen(1997, '0.0.0.0')
 
+const psb = powerSaveBlocker.start('prevent-display-sleep')
+
 let mainWindow
 
 function createWindow() {
@@ -18,12 +22,13 @@ function createWindow() {
     acceptFirstMouse: true,
     allowRunningInsecureContent: true,
     alwaysOnTop: true,
-    // fullscreen: true,
+    fullscreen: true,
     frame: false,
-    // kiosk: true,
+    kiosk: true,
     title: 'Numbered Ticket Terminal',
     webSecurity: false
   })
+
   mainWindow.loadURL('http://0.0.0.0:1997/index.html')
 
   if (!process.env.CI && !(process.env.NODE_ENV === 'production')) {
@@ -32,12 +37,10 @@ function createWindow() {
   }
 
   mainWindow.on('closed', () => {
-    Electron.session.defaultSession.clearCache(() => {
-      console.log('Electron.session.defaultSession.clearCache()')
-    })
     mainWindow = null
   })
 }
+
 app.on('ready', () => {
   createWindow()
 })
@@ -49,16 +52,17 @@ app.on('activate', () => {
 })
 
 ipcMain.on('asynchronous-message', (event, arg) => {
-  console.log(arg) // prints "ping"
+  log.debug(arg) // prints "ping"
   event.sender.send('asynchronous-reply', 'pong')
 })
 
 ipcMain.on('synchronous-message', (event, arg) => {
-  console.log(arg) // prints "ping"
+  log.debug(arg) // prints "ping"
   event.returnValue = 'pong'
 })
 
 app.on('window-all-closed', () => {
+  powerSaveBlocker.stop(psb)
   if (process.platform !== 'darwin') {
     app.quit()
   }
