@@ -11,7 +11,12 @@ const HTTP = require('http')
 const NodeStatic = require('node-static')
 
 const server = new NodeStatic.Server(__dirname + '/public', {
-  'cache-control': false
+  'cache-control': false,
+  headers: {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'GET',
+    'Access-Control-Allow-Headers': 'Content-Type'
+  }
 })
 HTTP.createServer((request, response) => {
   request

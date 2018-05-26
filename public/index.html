@@ -5,10 +5,12 @@
   <meta charset="UTF-8">
   <title>Numbered Ticket Terminal</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="js/index.js"></script>
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" crossorigin />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css" crossorigin />
   <link rel="stylesheet" href="./css/index.css" />
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="http://0.0.0.0:8098"></script>
+  <script src="http://momentjs.com/downloads/moment.min.js"></script>
 </head>
 
 <body>
@@ -52,7 +54,7 @@
             <span class="is-size-1">現在体験中</span>
             <br>
             <span class="is-size-2">The current session No.</span>
-            <div id="currentNo" class="box is-size-1 has-text-centered">10</div>
+            <div id="currentNo" class="box is-size-1 has-text-centered">{{currentNo}}</div>
           </div>
         </div>
         <div class="column">
@@ -60,16 +62,17 @@
             <span class="is-size-1">予約可能な体験時刻</span>
             <br>
             <span class="is-size-2">The next bookable time</span>
-            <div id="bookable" class="box is-size-1 has-text-centered">12:34</div>
+            <div id="bookable" class="box is-size-1 has-text-centered">{{bookable}}</div>
             <span class="is-size-1">現在の時刻</span>
             <br>
             <span class="is-size-2">The current time</span>
-            <div id="currentTime" class="box is-size-1 has-text-centered">01:23</div>
+            <div id="currentTime" class="box is-size-1 has-text-centered">{{currentTime}}</div>
           </div>
         </div>
       </div>
     </div>
   </section>
+  <script src="js/index.js"></script>
 </body>
 
 </html>
