@@ -46,8 +46,16 @@ const psb = powerSaveBlocker.start('prevent-display-sleep')
 
 let mainWindow
 
-let currentNo = 7
+let currentNo = 0
 let bookableTime = moment().format('HH:mm:ss')
+
+function getCurrentNo() {
+  return currentNo
+}
+
+function getBookableTime() {
+  return bookableTime
+}
 
 function createWindow() {
   mainWindow = new BrowserWindow({
@@ -89,28 +97,16 @@ ipcMain.on('asynchronous-message', (event, arg) => {
   log.debug(arg) // prints "ping"
   switch (arg) {
   case 'KeyP':
-    print()
+    event.sender.send('update-currentNo', 'async-pong')
     break
   case 'KeyN':
-    next()
+    event.sender.send('update-bookableTime', 'async-pong')
     break
   default:
     event.sender.send('asynchronous-reply', 'async-pong')
     break
   }
 })
-
-function print() {
-  log.debug('print()')
-  log.info('currentNo:', currentNo)
-  currentNo += 1
-}
-
-function next() {
-  log.debug('next()')
-  log.info('bookableTime:', bookableTime)
-  bookableTime = moment().format('HH:mm:ss')
-}
 
 app.on('window-all-closed', () => {
   powerSaveBlocker.stop(psb)

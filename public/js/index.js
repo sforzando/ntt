@@ -18,15 +18,25 @@ window.addEventListener('keyup', e => {
 const currentNo = new Vue({
   el: '#currentNo',
   data: {
-    currentNo: remote.currentNo
+    currentNo: 0
   }
+})
+
+ipcRenderer.on('update-currentNo', (event, arg) => {
+  log.info('update-currentNo()', arg)
+  currentNo.currentNo = arg
 })
 
 const bookableTime = new Vue({
   el: '#bookableTime',
   data: {
-    bookableTime: remote.bookableTime
+    bookableTime: '00:00'
   }
+})
+
+ipcRenderer.on('update-bookableTime', (event, arg) => {
+  log.info('update-bookableTime', arg)
+  bookableTime.bookableTime = arg
 })
 
 const currentTime = new Vue({
