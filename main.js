@@ -7,6 +7,19 @@ const {
 } = require('electron')
 const log = require('electron-log')
 
+const moment = require('moment')
+const Datastore = require('nedb')
+const path = require('path')
+const db = new Datastore({
+  autoload: true,
+  filename: path.join(
+    app.getPath('desktop'),
+    moment().format('YYYYMMDDddd') + '.db'
+  ),
+  timestampData: true
+})
+log.debug(db)
+
 const HTTP = require('http')
 const NodeStatic = require('node-static')
 
@@ -33,12 +46,15 @@ const psb = powerSaveBlocker.start('prevent-display-sleep')
 
 let mainWindow
 
+let currentNo = 7
+let bookableTime = moment().format('HH:mm:ss')
+
 function createWindow() {
   mainWindow = new BrowserWindow({
     acceptFirstMouse: true,
     allowRunningInsecureContent: true,
     alwaysOnTop: true,
-    // fullscreen: true,
+    fullscreen: true,
     width: 1920,
     height: 1080,
     frame: false,
@@ -71,13 +87,30 @@ app.on('activate', () => {
 
 ipcMain.on('asynchronous-message', (event, arg) => {
   log.debug(arg) // prints "ping"
-  event.sender.send('asynchronous-reply', 'pong')
+  switch (arg) {
+  case 'KeyP':
+    print()
+    break
+  case 'KeyN':
+    next()
+    break
+  default:
+    event.sender.send('asynchronous-reply', 'async-pong')
+    break
+  }
 })
 
-ipcMain.on('synchronous-message', (event, arg) => {
-  log.debug(arg) // prints "ping"
-  event.returnValue = 'pong'
-})
+function print() {
+  log.debug('print()')
+  log.info('currentNo:', currentNo)
+  currentNo += 1
+}
+
+function next() {
+  log.debug('next()')
+  log.info('bookableTime:', bookableTime)
+  bookableTime = moment().format('HH:mm:ss')
+}
 
 app.on('window-all-closed', () => {
   powerSaveBlocker.stop(psb)

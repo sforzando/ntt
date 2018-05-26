@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css" crossorigin />
   <link rel="stylesheet" href="./css/index.css" />
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-  <script src="http://0.0.0.0:8098"></script>
+  <!-- <script src="http://0.0.0.0:8098"></script> -->
   <script src="http://momentjs.com/downloads/moment.min.js"></script>
 </head>
 
@@ -62,7 +62,7 @@
             <span class="is-size-1">予約可能な体験時刻</span>
             <br>
             <span class="is-size-2">The next bookable time</span>
-            <div id="bookable" class="box is-size-1 has-text-centered">{{bookable}}</div>
+            <div id="bookableTime" class="box is-size-1 has-text-centered">{{bookableTime}}</div>
             <span class="is-size-1">現在の時刻</span>
             <br>
             <span class="is-size-2">The current time</span>
@@ -72,6 +72,12 @@
       </div>
     </div>
   </section>
+  <audio id="sound_ok" preload="auto">
+    <source src="./sound/se_ok.wav" />
+  </audio>
+  <audio id="sound_ng" preload="auto">
+    <source src="./sound/se_ng.wav" />
+  </audio>
   <script src="js/index.js"></script>
 </body>
 
