@@ -7,9 +7,7 @@
     "url": "git+https://github.com/sforzando/ntt.git"
   },
   "main": "main.js",
-  "keywords": [
-    "electron"
-  ],
+  "keywords": ["electron"],
   "author": "sforzando LLC.",
   "license": "MIT",
   "build": {
@@ -42,17 +40,16 @@
     "clean": "echo \"Error: no clean command specified\" && exit 1",
     "build": "npm run build:mac",
     "build:mac": "electron-builder --mac --x64",
-    "build:lecture": "electron-builder --mac --x64 -c.mac.icon=build/icons/ntt-lecture.icns",
+    "build:lecture":
+      "electron-builder --mac --x64 -c.mac.icon=build/icons/ntt-lecture.icns",
     "build:win": "electron-builder --win --x64",
     "format": "prettier-eslint \"src/**/*.js\"",
     "start": "electron .",
     "test": "echo \"Error: no test specified\" && exit 1",
+    "preview": "static -a 0.0.0.0 -p 1997 -c 0 public",
     "precommit": "lint-staged"
   },
   "lint-staged": {
-    "*.js": [
-      "prettier-eslint --write",
-      "git add"
-    ]
+    "*.js": ["prettier-eslint --write", "git add"]
   }
 }

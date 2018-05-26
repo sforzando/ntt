@@ -1,14 +1,25 @@
-const { app, BrowserWindow, ipcMain, powerSaveBlocker } = require('electron')
+const {
+  app,
+  BrowserWindow,
+  Electron,
+  ipcMain,
+  powerSaveBlocker
+} = require('electron')
 const log = require('electron-log')
 
 const HTTP = require('http')
 const NodeStatic = require('node-static')
 
-const file = new NodeStatic.Server(__dirname + '/public')
+const server = new NodeStatic.Server(__dirname + '/public', {
+  'cache-control': false
+})
 HTTP.createServer((request, response) => {
   request
+    .addListener('error', err => {
+      log.error(err)
+    })
     .addListener('end', () => {
-      file.serve(request, response)
+      server.serve(request, response)
     })
     .resume()
 }).listen(1997, '0.0.0.0')
@@ -63,6 +74,7 @@ ipcMain.on('synchronous-message', (event, arg) => {
 
 app.on('window-all-closed', () => {
   powerSaveBlocker.stop(psb)
+  Electron.session.defaultSession.clearCache(() => {})
   if (process.platform !== 'darwin') {
     app.quit()
   }

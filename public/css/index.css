@@ -1,4 +1,5 @@
 @charset 'utf-8';
+@import url(http://mplus-webfonts.sourceforge.jp/mplus_webfonts.css);
 
 * {
   margin: 0;
@@ -14,12 +15,10 @@ body {
   display: -ms-flexbox;
   display: flex;
 
-  /* 左右中央寄せ */
   -webkit-box-pack: center;
   -ms-flex-pack: center;
   justify-content: center;
 
-  /* 上下中央寄せ */
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
@@ -33,4 +32,8 @@ body {
   background-size: cover;
   background-position: center;
   background-image: url('//0.0.0.0:1997/image/index_background.png');
+}
+
+#header {
+  font-family: 'mplus-1p-bold';
 }

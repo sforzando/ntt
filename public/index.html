@@ -11,19 +11,26 @@
 </head>
 
 <body>
-  <div class="background">
-    <h1>Hello World!</h1>
-    <div class="container">
-      <div class="notification">
-        This container is
-        <strong>centered</strong> on desktop.
+  <section id="header">
+    <div class="container is-fluid">
+      <div class="columns">
+        <div class="column is-6 has-background-white">
+          <span class="is-size-1 has-text-justified">吉開菜央 | YOSHIGAI Nao</span>
+          <p class="is-size-2 has-text-justified">《Grand Bouquet／いま 一番うつくしいあなたたちへ》
+            <br>“Grand Bouquet”</p>
+        </div>
+        <div class="column is-6 has-background-dark">header-right</div>
       </div>
     </div>
-    We are using Node.js
-    <script>document.write(process.versions.node)</script>, Chromium
-    <script>document.write(process.versions.chrome)</script>, and Electron
-    <script>document.write(process.versions.electron)</script>.
-  </div>
+  </section>
+  <section id="body">
+    <div class="container is-fluid">
+      <div class="columns">
+        <div class="column has-background-info">main-left</div>
+        <div class="column has-background-light">main-right</div>
+      </div>
+    </div>
+  </section>
 </body>
 
 </html>
