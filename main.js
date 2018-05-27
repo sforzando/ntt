@@ -2,9 +2,13 @@ const { app, BrowserWindow, Electron, powerSaveBlocker } = require('electron')
 const log = require('electron-log')
 
 const moment = require('moment')
+
+/**
+ * DataStore w/ nedb
+ */
+const DB_PREFIX = 'yoshigai'
 const Datastore = require('nedb')
 const path = require('path')
-const DB_PREFIX = 'yoshigai'
 const db = new Datastore({
   autoload: true,
   filename: path.join(
@@ -13,44 +17,52 @@ const db = new Datastore({
   ),
   timestampData: true
 })
-log.debug(db)
+log.debug('nedb: ', db)
 
+/**
+ * Internal Server
+ */
 const HTTP = require('http')
 const NodeStatic = require('node-static')
-
-const server = new NodeStatic.Server(__dirname + '/public', {
-  'cache-control': false,
+const nodeStaticServer = new NodeStatic.Server(__dirname + '/public', {
+  cache: false,
   headers: {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Methods': 'GET',
     'Access-Control-Allow-Headers': 'Content-Type'
   }
 })
-HTTP.createServer((request, response) => {
+log.debug('nodeStaticServer: ', nodeStaticServer)
+const httpServer = HTTP.createServer((request, response) => {
   request
     .addListener('error', err => {
-      log.error(err)
+      log.error('HTTP ERROR: ', err)
     })
     .addListener('end', () => {
-      server.serve(request, response)
+      nodeStaticServer.serve(request, response)
     })
     .resume()
-}).listen(1997, '0.0.0.0')
+}).listen(1997)
+log.debug('httpServer: ', httpServer)
 
-const WebSocket = require('ws')
-const wss = new WebSocket.Server({
-  port: 8080
-})
-wss.on('connection', ws => {
-  ws.on('message', message => {
-    log.info('ws.on:', message)
+/**
+ * Socket.IO
+ */
+const socketio = require('socket.io')
+const io = socketio.listen(httpServer)
+io.sockets.on('connection', socket => {
+  log.debug('Socket.IO: ', socket)
+  socket.on('message', data => {
+    log.info('message: ', data)
+    io.sockets.emit('message', data)
   })
-  ws.send('connection()')
 })
 
-const psb = powerSaveBlocker.start('prevent-display-sleep')
-
+/**
+ * Electron
+ */
 let mainWindow
+const psb = powerSaveBlocker.start('prevent-display-sleep')
 
 function createWindow() {
   mainWindow = new BrowserWindow({
