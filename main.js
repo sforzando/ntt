@@ -59,7 +59,12 @@ io.sockets.on('connection', socket => {
     io.sockets.emit('message', data)
 
     let p = new printer()
-    p.sample()
+    p.print(
+      '吉開菜央 | YOSHIGAI Nao',
+      '《Grand Bouquet／いま 一番うつくしいあなたたちへ》',
+      10,
+      '12:34'
+    )
   })
 })
 

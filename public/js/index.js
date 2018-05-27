@@ -26,6 +26,7 @@ function play_ng() {
  * Socket.IO
  */
 const socketio = io.connect()
+console.log(socketio)
 socketio.on('connected', name => {
   console.log('socket.io connected: ', name)
 })
@@ -45,6 +46,7 @@ socketio.on('bookableTime', msg => {
  * Keyboard Events
  */
 window.addEventListener('keyup', e => {
+  console.log(e)
   switch (e.code) {
   case settings.printKey:
   case settings.nextKey:

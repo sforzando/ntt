@@ -15,18 +15,94 @@ module.exports = class Printer {
   sample() {
     device.open(() => {
       printer
-        .font('a')
         .align('ct')
+        .size(2, 2)
+        .font('a')
+        .text('a')
+        .style('b')
+        .text('b 日本語のテスト 0123456789')
+        .style('i')
+        .text('i 日本語のテスト 0123456789')
+        .style('u')
+        .text('u 日本語のテスト 0123456789')
+        .style('u2')
+        .text('u2 日本語のテスト 0123456789')
+        .style('bi')
+        .text('bi 日本語のテスト 0123456789')
+        .style('biu')
+        .text('biu 日本語のテスト 0123456789')
         .style('bu')
-        .size(1, 1)
-        .text('The quick brown fox jumps over the lazy dog')
-        .text('日本語のテスト')
-        .barcode('1234567', 'EAN8')
-        .qrimage('https://github.com/song940/node-escpos', function(err) {
+        .text('bu 日本語のテスト 0123456789')
+        .style('bu2')
+        .text('bu2 日本語のテスト 0123456789')
+        .style('iu')
+        .text('iu 日本語のテスト 0123456789')
+        .style('iu2')
+        .text('iu2 日本語のテスト 0123456789')
+        .control('LF')
+        .font('b')
+        .text('b')
+        .style('b')
+        .text('b 日本語のテスト 0123456789')
+        .style('i')
+        .text('i 日本語のテスト 0123456789')
+        .style('u')
+        .text('u 日本語のテスト 0123456789')
+        .style('u2')
+        .text('u2 日本語のテスト 0123456789')
+        .style('bi')
+        .text('bi 日本語のテスト 0123456789')
+        .style('biu')
+        .text('biu 日本語のテスト 0123456789')
+        .style('bu')
+        .text('bu 日本語のテスト 0123456789')
+        .style('bu2')
+        .text('bu2 日本語のテスト 0123456789')
+        .style('iu')
+        .text('iu 日本語のテスト 0123456789')
+        .style('iu2')
+        .text('iu2 日本語のテスト 0123456789')
+        .control('LF')
+        .qrimage('title:number:time', err => {
           if (err) console.error(err)
-          this.cut()
-          this.close()
+          printer
+            .control('LF') // LF: Line Feed
+            .cut()
+            .close()
         })
+    })
+  }
+
+  print(
+    exhibitor,
+    title,
+    number,
+    time,
+    note = '予定時刻の10分前にお越しください。'
+  ) {
+    device.open(() => {
+      printer
+        .font('a')
+        .size(2, 2)
+        .align('CT')
+        .style('b')
+        .text(exhibitor)
+        .text(title)
+        .control('LF')
+        .text('番号')
+        .style('bu')
+        .text(number)
+        .control('LF')
+        .style('b')
+        .text('予定時刻')
+        .style('bu')
+        .text(time)
+        .control('LF')
+        .size(1, 1)
+        .text(note)
+        .control('LF')
+        .cut()
+        .close()
     })
   }
 }
