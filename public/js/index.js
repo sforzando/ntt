@@ -3,6 +3,11 @@
 /* globals moment */
 /* globals Vue */
 
+let settings = {
+  printKey: 'KeyP',
+  nextKey: 'KeyN'
+}
+
 /**
  * Sound Effects
  */
@@ -17,22 +22,41 @@ function play_ng() {
   sound_ng.play()
 }
 
+/**
+ * Socket.IO
+ */
 const socketio = io.connect()
 socketio.on('connected', name => {
   console.log('socket.io connected: ', name)
 })
-socketio.on('message', data => {
-  console.log('socket.io message: ', data)
+socketio.on('message', msg => {
+  console.log('socket.io message: ', msg)
+})
+socketio.on('currentNo', msg => {
+  console.log('currentNo: ', msg)
+  currentNo.currentNo = msg
+})
+socketio.on('bookableTime', msg => {
+  console.log('bookableTime: ', msg)
+  bookableTime.bookableTime = msg
 })
 
 /**
  * Keyboard Events
  */
 window.addEventListener('keyup', e => {
-  socketio.json.emit('message', { code: e.code }, response => {
-    console.log('socket.io response: ', response)
-  })
-  play_ok()
+  switch (e.code) {
+  case settings.printKey:
+  case settings.nextKey:
+    socketio.json.emit('message', { code: e.code }, response => {
+      console.log('socket.io response: ', response)
+    })
+    play_ok()
+    break
+  default:
+    play_ng()
+    break
+  }
 })
 
 /**
