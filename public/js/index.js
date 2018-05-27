@@ -1,36 +1,36 @@
-const { ipcRenderer, remote } = require('electron')
-const log = require('electron-log')
+/* eslint no-console: 0 */
+/* globals moment */
+/* globals Vue */
 
 const sound_ok = document.getElementById('sound_ok')
-const sound_ng = document.getElementById('sound_ng')
-
-ipcRenderer.on('asynchronous-reply', (event, arg) => {
-  log.info(arg)
-})
-
-window.addEventListener('keyup', e => {
-  log.info('code: ', e.code) // like 'keyA'
-  ipcRenderer.send('asynchronous-message', e.code)
-  connection.send(e.code)
+function play_ok() {
   sound_ok.currentTime = 0
   sound_ok.play()
-})
+}
+const sound_ng = document.getElementById('sound_ng')
+function play_ng() {
+  sound_ng.currentTime = 0
+  sound_ng.play()
+}
 
 const connection = new WebSocket('ws://0.0.0.0:8080')
 connection.onopen = () => {
-  log.info('onopen()')
-  connection.send('Ping')
+  connection.send('connection.onopen()')
 }
 
 connection.onerror = error => {
-  log.info('onerror()')
-  log.error(error)
+  console.error(error)
+  play_ng()
 }
 
 connection.onmessage = e => {
-  log.info('onmessage()')
-  log.info(e.data)
+  console.info(e.data)
 }
+
+window.addEventListener('keyup', e => {
+  connection.send(e.code)
+  play_ok()
+})
 
 const currentNo = new Vue({
   el: '#currentNo',
@@ -39,21 +39,11 @@ const currentNo = new Vue({
   }
 })
 
-ipcRenderer.on('update-currentNo', (event, arg) => {
-  log.info('update-currentNo()', arg)
-  currentNo.currentNo = arg
-})
-
 const bookableTime = new Vue({
   el: '#bookableTime',
   data: {
     bookableTime: '00:00'
   }
-})
-
-ipcRenderer.on('update-bookableTime', (event, arg) => {
-  log.info('update-bookableTime', arg)
-  bookableTime.bookableTime = arg
 })
 
 const currentTime = new Vue({

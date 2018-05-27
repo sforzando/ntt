@@ -1,20 +1,15 @@
-const {
-  app,
-  BrowserWindow,
-  Electron,
-  ipcMain,
-  powerSaveBlocker
-} = require('electron')
+const { app, BrowserWindow, Electron, powerSaveBlocker } = require('electron')
 const log = require('electron-log')
 
 const moment = require('moment')
 const Datastore = require('nedb')
 const path = require('path')
+const DB_PREFIX = 'yoshigai'
 const db = new Datastore({
   autoload: true,
   filename: path.join(
     app.getPath('desktop'),
-    moment().format('YYYYMMDDddd') + '.db'
+    DB_PREFIX + '_' + moment().format('YYYYMMDDddd') + '.db'
   ),
   timestampData: true
 })
@@ -48,7 +43,7 @@ const wss = new WebSocket.Server({
 })
 wss.on('connection', ws => {
   ws.on('message', message => {
-    log.info('ws.on', message)
+    log.info('ws.on:', message)
   })
   ws.send('connection()')
 })
@@ -56,17 +51,6 @@ wss.on('connection', ws => {
 const psb = powerSaveBlocker.start('prevent-display-sleep')
 
 let mainWindow
-
-let currentNo = 0
-let bookableTime = moment().format('HH:mm:ss')
-
-function getCurrentNo() {
-  return currentNo
-}
-
-function getBookableTime() {
-  return bookableTime
-}
 
 function createWindow() {
   mainWindow = new BrowserWindow({
@@ -101,21 +85,6 @@ app.on('ready', () => {
 app.on('activate', () => {
   if (mainWindow === null) {
     createWindow()
-  }
-})
-
-ipcMain.on('asynchronous-message', (event, arg) => {
-  log.debug(arg) // prints "ping"
-  switch (arg) {
-  case 'KeyP':
-    event.sender.send('update-currentNo', 'async-pong')
-    break
-  case 'KeyN':
-    event.sender.send('update-bookableTime', 'async-pong')
-    break
-  default:
-    event.sender.send('asynchronous-reply', 'async-pong')
-    break
   }
 })
 
