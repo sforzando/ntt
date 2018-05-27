@@ -26,7 +26,7 @@ function play_ng() {
  * Socket.IO
  */
 const socketio = io.connect()
-console.log(socketio)
+console.table(socketio)
 socketio.on('connected', name => {
   console.log('socket.io connected: ', name)
 })
@@ -46,7 +46,7 @@ socketio.on('bookableTime', msg => {
  * Keyboard Events
  */
 window.addEventListener('keyup', e => {
-  console.log(e)
+  console.info(e)
   switch (e.code) {
   case settings.printKey:
   case settings.nextKey:
@@ -64,6 +64,21 @@ window.addEventListener('keyup', e => {
 /**
  * Create Components w/ Vue
  */
+const exhibitorName = new Vue({
+  el: '#exhibitorName',
+  data: {
+    exhibitorName: '吉開菜央 | YOSHIGAI Nao'
+  }
+})
+
+const exhibitionTitle = new Vue({
+  el: '#exhibitionTitle',
+  data: {
+    exhibitionTitle:
+      '《Grand Bouquet／いま 一番うつくしいあなたたちへ》\n“Grand Bouquet”'
+  }
+})
+
 const currentNo = new Vue({
   el: '#currentNo',
   data: {
