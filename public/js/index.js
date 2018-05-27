@@ -4,11 +4,10 @@
 /* globals Vue */
 
 let settings = {
-  exhibitorName: '吉開菜央 | YOSHIGAI Nao',
-  exhibitionTitle:
-    '《Grand Bouquet／いま 一番うつくしいあなたたちへ》\n“Grand Bouquet”',
-  printKey: 'KeyP',
-  nextKey: 'KeyN'
+  exhibitorName: '',
+  exhibitionTitle: '',
+  printKey: '',
+  nextKey: ''
 }
 
 /**
@@ -32,6 +31,22 @@ const socketio = io.connect()
 console.table(socketio)
 socketio.on('connected', name => {
   console.log('socket.io connected: ', name)
+})
+socketio.on('settings', msg => {
+  console.table('socket.io settings: ', msg)
+  settings = msg
+  new Vue({
+    el: '#exhibitorName',
+    data: {
+      exhibitorName: settings.exhibitorName
+    }
+  })
+  new Vue({
+    el: '#exhibitionTitle',
+    data: {
+      exhibitionTitle: settings.exhibitionTitle
+    }
+  })
 })
 socketio.on('message', msg => {
   console.log('socket.io message: ', msg)
@@ -67,31 +82,17 @@ window.addEventListener('keyup', e => {
 /**
  * Create Components w/ Vue
  */
-const exhibitorName = new Vue({
-  el: '#exhibitorName',
-  data: {
-    exhibitorName: settings.exhibitorName
-  }
-})
-
-const exhibitionTitle = new Vue({
-  el: '#exhibitionTitle',
-  data: {
-    exhibitionTitle: settings.exhibitionTitle
-  }
-})
-
 const currentNo = new Vue({
   el: '#currentNo',
   data: {
-    currentNo: 0
+    currentNo: 9999
   }
 })
 
 const bookableTime = new Vue({
   el: '#bookableTime',
   data: {
-    bookableTime: '00:00'
+    bookableTime: '99:99'
   }
 })
 

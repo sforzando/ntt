@@ -5,6 +5,15 @@ const moment = require('moment')
 
 const printer = require('./printer')
 
+let settings = {
+  exhibitorName: '吉開菜央 | YOSHIGAI Nao',
+  exhibitionTitle:
+    '《Grand Bouquet／いま いちばん美しいあなたたちへ》\n“Grand Bouquet”',
+  printKey: 'KeyP',
+  nextKey: 'KeyN',
+  note: '予定時刻の5分前にお越しください。'
+}
+
 /**
  * DataStore w/ nedb
  */
@@ -20,6 +29,41 @@ const db = new Datastore({
   timestampData: true
 })
 log.debug('nedb: ', db)
+
+function getLatestBook() {
+  return db
+    .find({})
+    .sort({ no: -1 })
+    .exec((err, docs) => {
+      log.info(docs)
+    })
+}
+
+function getCurrentNo() {
+  log.info('getLatestBook(): ', getLatestBook())
+  return 0
+}
+
+function getBookableTime() {
+  return '00:00'
+}
+
+function print() {
+  let doc = {
+    no: getCurrentNo() + 1
+  }
+  db.insert(doc, () => {
+    log.info('db insert()')
+  })
+  new printer().print(
+    // XXX: Just Debug!!
+    settings.exhibitorName,
+    settings.exhibitionTitle,
+    getCurrentNo(),
+    getBookableTime(),
+    settings.note
+  )
+}
 
 /**
  * Internal Server
@@ -54,17 +98,25 @@ const socketio = require('socket.io')
 const io = socketio.listen(httpServer)
 io.sockets.on('connection', socket => {
   log.debug('Socket.IO: ', socket)
-  socket.on('message', data => {
-    log.info('message: ', data)
-    io.sockets.emit('message', data)
 
-    let p = new printer()
-    p.print(
-      '吉開菜央 | YOSHIGAI Nao',
-      '《Grand Bouquet／いま 一番うつくしいあなたたちへ》',
-      10,
-      '12:34'
-    )
+  io.sockets.json.emit('settings', settings)
+  io.sockets.emit('currentNo', getCurrentNo())
+  io.sockets.emit('bookableTime', getBookableTime())
+
+  socket.on('message', data => {
+    log.debug('message: ', data)
+
+    switch (data.code) {
+    case settings.printKey:
+      print()
+      break
+    case settings.nextKey:
+      break
+    default:
+      break
+    }
+
+    io.sockets.emit('message', data)
   })
 })
 
