@@ -11,9 +11,26 @@ ipcRenderer.on('asynchronous-reply', (event, arg) => {
 window.addEventListener('keyup', e => {
   log.info('code: ', e.code) // like 'keyA'
   ipcRenderer.send('asynchronous-message', e.code)
+  connection.send(e.code)
   sound_ok.currentTime = 0
   sound_ok.play()
 })
+
+const connection = new WebSocket('ws://0.0.0.0:8080')
+connection.onopen = () => {
+  log.info('onopen()')
+  connection.send('Ping')
+}
+
+connection.onerror = error => {
+  log.info('onerror()')
+  log.error(error)
+}
+
+connection.onmessage = e => {
+  log.info('onmessage()')
+  log.info(e.data)
+}
 
 const currentNo = new Vue({
   el: '#currentNo',

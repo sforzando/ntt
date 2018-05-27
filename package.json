@@ -31,7 +31,8 @@
     "electron-log": "^2.2.14",
     "moment": "^2.22.1",
     "nedb": "^1.8.0",
-    "node-static": "^0.7.10"
+    "node-static": "^0.7.10",
+    "ws": "^5.2.0"
   },
   "devDependencies": {
     "@vue/devtools": "^1.1.0",

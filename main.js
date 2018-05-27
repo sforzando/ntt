@@ -42,6 +42,17 @@ HTTP.createServer((request, response) => {
     .resume()
 }).listen(1997, '0.0.0.0')
 
+const WebSocket = require('ws')
+const wss = new WebSocket.Server({
+  port: 8080
+})
+wss.on('connection', ws => {
+  ws.on('message', message => {
+    log.info('ws.on', message)
+  })
+  ws.send('connection()')
+})
+
 const psb = powerSaveBlocker.start('prevent-display-sleep')
 
 let mainWindow
