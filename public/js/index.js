@@ -4,6 +4,9 @@
 /* globals Vue */
 
 let settings = {
+  exhibitorName: '吉開菜央 | YOSHIGAI Nao',
+  exhibitionTitle:
+    '《Grand Bouquet／いま 一番うつくしいあなたたちへ》\n“Grand Bouquet”',
   printKey: 'KeyP',
   nextKey: 'KeyN'
 }
@@ -67,15 +70,14 @@ window.addEventListener('keyup', e => {
 const exhibitorName = new Vue({
   el: '#exhibitorName',
   data: {
-    exhibitorName: '吉開菜央 | YOSHIGAI Nao'
+    exhibitorName: settings.exhibitorName
   }
 })
 
 const exhibitionTitle = new Vue({
   el: '#exhibitionTitle',
   data: {
-    exhibitionTitle:
-      '《Grand Bouquet／いま 一番うつくしいあなたたちへ》\n“Grand Bouquet”'
+    exhibitionTitle: settings.exhibitionTitle
   }
 })
 

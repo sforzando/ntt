@@ -5,6 +5,10 @@ body {
   cursor: none;
 }
 
+.is-size-0 {
+  font-size: 6rem;
+}
+
 .background {
   display: -webkit-box;
   display: -ms-flexbox;
