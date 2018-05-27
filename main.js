@@ -3,6 +3,8 @@ const log = require('electron-log')
 
 const moment = require('moment')
 
+const printer = require('./printer')
+
 /**
  * DataStore w/ nedb
  */
@@ -55,6 +57,9 @@ io.sockets.on('connection', socket => {
   socket.on('message', data => {
     log.info('message: ', data)
     io.sockets.emit('message', data)
+
+    let p = new printer()
+    p.sample()
   })
 })
 
