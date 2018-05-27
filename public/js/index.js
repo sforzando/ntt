@@ -1,7 +1,11 @@
 /* eslint no-console: 0 */
+/* globals io */
 /* globals moment */
 /* globals Vue */
 
+/**
+ * Sound Effects
+ */
 const sound_ok = document.getElementById('sound_ok')
 function play_ok() {
   sound_ok.currentTime = 0
@@ -13,25 +17,27 @@ function play_ng() {
   sound_ng.play()
 }
 
-const connection = new WebSocket('ws://0.0.0.0:8080')
-connection.onopen = () => {
-  connection.send('connection.onopen()')
-}
+const socketio = io.connect()
+socketio.on('connected', name => {
+  console.log('socket.io connected: ', name)
+})
+socketio.on('message', data => {
+  console.log('socket.io message: ', data)
+})
 
-connection.onerror = error => {
-  console.error(error)
-  play_ng()
-}
-
-connection.onmessage = e => {
-  console.info(e.data)
-}
-
+/**
+ * Keyboard Events
+ */
 window.addEventListener('keyup', e => {
-  connection.send(e.code)
+  socketio.json.emit('message', { code: e.code }, response => {
+    console.log('socket.io response: ', response)
+  })
   play_ok()
 })
 
+/**
+ * Create Components w/ Vue
+ */
 const currentNo = new Vue({
   el: '#currentNo',
   data: {
