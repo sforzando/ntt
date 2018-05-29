@@ -7,7 +7,7 @@ let settings = {
   keyNext: 'KeyN',
   keyPrint: 'KeyP',
   keyReprint: 'KeyR',
-  lastOrder: '23:45', // = 閉館時刻(ex. 17:55) - experienceTime
+  lastOrder: '23:30', // = 閉館時刻(ex. 17:55) - experienceTime
   note: '予定時刻の5分前にお越しください。',
   port: 1997
 }
@@ -15,6 +15,7 @@ let settings = {
 let currentNo = 0
 let latestNo = 0
 let books = []
+let bookableTime = ''
 
 const moment = require('moment')
 const path = require('path')
@@ -41,50 +42,50 @@ const printer = require('./printer')
 //   ),
 //   timestampData: true
 // })
-// log.debug('nedb:', db)
+// log.silly('nedb:', db)
 
 function getBookableTime() {
   log.silly('getBookableTime()')
-  log.info('books:', books)
   const lastOrder = moment(settings.lastOrder, 'HH:mm')
-  log.info('lastOrder:', lastOrder)
   const currentTime = moment()
-  if (0 < books.length) {
+  if (books.length) {
     const latestBook = books[books.length - 1]
-    log.info('latestBook:', latestBook)
     const latestBookedTime = moment(latestBook.bookedTime, 'HH:mm')
-    log.info('latestBookedTime:', latestBookedTime)
-    log.info('latestBook.bookedTime:', latestBook.bookedTime)
     const bookableTime = latestBookedTime.add(
       settings.experienceTime,
       'minutes'
     )
-    log.info('bookableTime:', bookableTime)
-    if (bookableTime.isBefore(currentTime)) {
-      return currentTime.format('HH:mm')
-    }
     if (bookableTime.isBefore(lastOrder)) {
-      return bookableTime.format('HH:mm')
+      if (bookableTime.isBefore(currentTime)) {
+        return currentTime.format('HH:mm')
+      } else {
+        return bookableTime.format('HH:mm')
+      }
     } else {
-      return 'END'
+      return 'CLOSE'
     }
   } else {
-    return currentTime.format('HH:mm')
+    if (currentTime.isBefore(lastOrder)) {
+      return currentTime.format('HH:mm')
+    } else {
+      return 'CLOSE'
+    }
   }
 }
 
 function book() {
   log.silly('book()')
-  const bookableTime = getBookableTime()
-  if (bookableTime == 'END') {
+  bookableTime = getBookableTime()
+  if (bookableTime == 'CLOSE') {
     return false
   }
-  latestNo += 1
   let book = {
     no: latestNo,
     bookedTime: bookableTime
   }
   books.push(book)
+  print(latestNo, bookableTime)
+  latestNo += 1
 }
 
 function next() {
@@ -92,7 +93,7 @@ function next() {
   currentNo += 1
 }
 
-function print(no, bookedTime) {
+function print(no = latestNo, bookedTime = bookableTime) {
   log.silly('print():', no, bookedTime)
   new printer().print(
     settings.exhibitorName,
@@ -138,23 +139,23 @@ log.debug('httpServer:', httpServer)
 const socketio = require('socket.io')
 const io = socketio.listen(httpServer)
 io.sockets.on('connection', socket => {
-  // log.debug('Socket.IO:', socket)
+  log.silly('Socket.IO:', socket)
 
   io.sockets.json.emit('settings', settings)
   update()
 
   socket.on('message', data => {
-    log.debug('message: ', data)
+    log.silly('message: ', data)
 
     switch (data.code) {
     case settings.keyPrint:
       book()
-      print(latestNo, getBookableTime())
       break
     case settings.keyNext:
       next()
       break
     case settings.keyReprint:
+      print()
       break
     default:
       break

@@ -6,7 +6,8 @@
 let settings = {
   keyPrint: '',
   keyNext: '',
-  keyReprint: ''
+  keyReprint: '',
+  lastOrder: ''
 }
 
 /**
@@ -30,9 +31,7 @@ const socketio = io.connect()
 console.log('socketio:', socketio)
 socketio.on('connected', name => {
   console.log('socket.io connected:', name)
-  socketio.emit('update', 'update', response => {
-    console.log('initial update:', response)
-  })
+  update()
 })
 socketio.on('settings', msg => {
   console.log('socket.io settings:', msg)
@@ -54,32 +53,27 @@ socketio.on('message', msg => {
   console.log('socket.io message:', msg)
 })
 socketio.on('currentNo', msg => {
-  console.log('currentNo:', msg)
   currentNo.currentNo = msg
 })
 socketio.on('bookableTime', msg => {
-  console.log('bookableTime:', msg)
   bookableTime.bookableTime = msg
 })
+
+function update() {
+  socketio.emit('update', 'update', response => {
+    console.log('initial update:', response)
+  })
+}
 
 /**
  * Keyboard Events
  */
 window.addEventListener('keyup', e => {
   console.info(e)
-  switch (e.code) {
-  case settings.keyPrint:
-  case settings.keyNext:
-  case settings.keyReprint:
-    socketio.json.emit('message', { code: e.code }, response => {
-      console.log('socket.io response:', response)
-    })
+  socketio.json.emit('message', { code: e.code }, response => {
+    console.log('socket.io response:', response)
     play_ok()
-    break
-  default:
-    play_ng()
-    break
-  }
+  })
 })
 
 /**
@@ -106,7 +100,9 @@ const currentTime = new Vue({
   },
   mounted: function() {
     setInterval(() => {
-      currentTime.currentTime = moment().format('HH:mm')
+      let now = moment()
+      currentTime.currentTime = now.format('HH:mm')
+      update()
     }, 1000)
   }
 })
