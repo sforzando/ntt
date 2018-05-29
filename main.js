@@ -7,13 +7,14 @@ let settings = {
   keyNext: 'KeyN',
   keyPrint: 'KeyP',
   keyReprint: 'KeyR',
-  lastOrder: '17:45', // = 閉館時刻(ex. 17:55) - experienceTime
+  lastOrder: '23:45', // = 閉館時刻(ex. 17:55) - experienceTime
   note: '予定時刻の5分前にお越しください。',
   port: 1997
 }
 
 let currentNo = 0
 let latestNo = 0
+let books = []
 
 const moment = require('moment')
 const path = require('path')
@@ -31,65 +32,59 @@ const printer = require('./printer')
 /**
  * DataStore w/ nedb
  */
-const Datastore = require('nedb')
-const db = new Datastore({
-  autoload: true,
-  filename: path.join(
-    app.getPath('userData'),
-    settings.file_prefix + '_' + moment().format('YYYYMMDDddd') + '.db'
-  ),
-  timestampData: true
-})
+// const Datastore = require('nedb')
+// const db = new Datastore({
+//   autoload: true,
+//   filename: path.join(
+//     app.getPath('userData'),
+//     settings.file_prefix + '_' + moment().format('YYYYMMDDddd') + '.db'
+//   ),
+//   timestampData: true
+// })
 // log.debug('nedb:', db)
-
-function getLatestBook() {
-  log.silly('getLatestBook()')
-  db
-    .find({ currentNo: { $exists: false } })
-    .sort({ no: -1 })
-    .limit(1)
-    .exec((err, book) => {
-      if (err) log.error('getLatestBook() ERROR:', err)
-      if (book == []) return false
-      log.info('latestBook:', book)
-      return book
-    })
-}
 
 function getBookableTime() {
   log.silly('getBookableTime()')
+  log.info('books:', books)
   const lastOrder = moment(settings.lastOrder, 'HH:mm')
-  const latestBook = getLatestBook()
-  if (latestBook) {
+  log.info('lastOrder:', lastOrder)
+  const currentTime = moment()
+  if (0 < books.length) {
+    const latestBook = books[books.length - 1]
+    log.info('latestBook:', latestBook)
     const latestBookedTime = moment(latestBook.bookedTime, 'HH:mm')
+    log.info('latestBookedTime:', latestBookedTime)
+    log.info('latestBook.bookedTime:', latestBook.bookedTime)
     const bookableTime = latestBookedTime.add(
       settings.experienceTime,
       'minutes'
     )
-    if (bookableTime.isBefore(moment())) {
-      return bookableTime('SOON')
+    log.info('bookableTime:', bookableTime)
+    if (bookableTime.isBefore(currentTime)) {
+      return currentTime.format('HH:mm')
     }
     if (bookableTime.isBefore(lastOrder)) {
       return bookableTime.format('HH:mm')
     } else {
       return 'END'
     }
+  } else {
+    return currentTime.format('HH:mm')
   }
 }
 
 function book() {
   log.silly('book()')
   const bookableTime = getBookableTime()
-  if (!bookableTime) {
-    return
+  if (bookableTime == 'END') {
+    return false
   }
-  let ticket = {
-    no: latestNo + 1,
-    bookedTime: bookableTime.format('HH:mm')
+  latestNo += 1
+  let book = {
+    no: latestNo,
+    bookedTime: bookableTime
   }
-  db.insert(ticket, () => {
-    log.info('nedb.insert():', ticket)
-  })
+  books.push(book)
 }
 
 function next() {
@@ -154,7 +149,7 @@ io.sockets.on('connection', socket => {
     switch (data.code) {
     case settings.keyPrint:
       book()
-      print()
+      print(latestNo, getBookableTime())
       break
     case settings.keyNext:
       next()
@@ -175,10 +170,10 @@ io.sockets.on('connection', socket => {
   })
 })
 
-async function update() {
+function update() {
   log.silly('update()')
   io.sockets.emit('currentNo', currentNo)
-  io.sockets.emit('bookableTime', await getBookableTime())
+  io.sockets.emit('bookableTime', getBookableTime())
 }
 
 /**
