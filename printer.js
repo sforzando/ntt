@@ -74,11 +74,11 @@ module.exports = class Printer {
   }
 
   print(
-    exhibitor,
-    title,
-    number,
-    time,
-    note = '予定時刻の10分前にお越しください。'
+    exhibitor = 'UNKNOWN',
+    title = 'NO TITLE',
+    number = 0,
+    time = '00:00',
+    note = '予定時刻の5分前にお越しください。'
   ) {
     device.open(() => {
       printer

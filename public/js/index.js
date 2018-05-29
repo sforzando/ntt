@@ -4,10 +4,9 @@
 /* globals Vue */
 
 let settings = {
-  exhibitorName: '',
-  exhibitionTitle: '',
-  printKey: '',
-  nextKey: ''
+  keyPrint: '',
+  keyNext: '',
+  keyReprint: ''
 }
 
 /**
@@ -28,12 +27,15 @@ function play_ng() {
  * Socket.IO
  */
 const socketio = io.connect()
-console.table(socketio)
+console.log('socketio:', socketio)
 socketio.on('connected', name => {
-  console.log('socket.io connected: ', name)
+  console.log('socket.io connected:', name)
+  socketio.emit('update', 'update', response => {
+    console.log('initial update:', response)
+  })
 })
 socketio.on('settings', msg => {
-  console.table('socket.io settings: ', msg)
+  console.log('socket.io settings:', msg)
   settings = msg
   new Vue({
     el: '#exhibitorName',
@@ -49,14 +51,14 @@ socketio.on('settings', msg => {
   })
 })
 socketio.on('message', msg => {
-  console.log('socket.io message: ', msg)
+  console.log('socket.io message:', msg)
 })
 socketio.on('currentNo', msg => {
-  console.log('currentNo: ', msg)
+  console.log('currentNo:', msg)
   currentNo.currentNo = msg
 })
 socketio.on('bookableTime', msg => {
-  console.log('bookableTime: ', msg)
+  console.log('bookableTime:', msg)
   bookableTime.bookableTime = msg
 })
 
@@ -66,10 +68,11 @@ socketio.on('bookableTime', msg => {
 window.addEventListener('keyup', e => {
   console.info(e)
   switch (e.code) {
-  case settings.printKey:
-  case settings.nextKey:
+  case settings.keyPrint:
+  case settings.keyNext:
+  case settings.keyReprint:
     socketio.json.emit('message', { code: e.code }, response => {
-      console.log('socket.io response: ', response)
+      console.log('socket.io response:', response)
     })
     play_ok()
     break

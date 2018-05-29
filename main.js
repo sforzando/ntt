@@ -1,66 +1,109 @@
-const { app, BrowserWindow, Electron, powerSaveBlocker } = require('electron')
-const log = require('electron-log')
-
-const moment = require('moment')
-
-const printer = require('./printer')
-
 let settings = {
   exhibitorName: '吉開菜央 | YOSHIGAI Nao',
   exhibitionTitle:
     '《Grand Bouquet／いま いちばん美しいあなたたちへ》\n“Grand Bouquet”',
-  printKey: 'KeyP',
-  nextKey: 'KeyN',
-  note: '予定時刻の5分前にお越しください。'
+  experienceTime: 10,
+  file_prefix: 'yoshigai',
+  keyNext: 'KeyN',
+  keyPrint: 'KeyP',
+  keyReprint: 'KeyR',
+  lastOrder: '17:45', // = 閉館時刻(ex. 17:55) - experienceTime
+  note: '予定時刻の5分前にお越しください。',
+  port: 1997
 }
+
+let currentNo = 0
+let latestNo = 0
+
+const moment = require('moment')
+const path = require('path')
+
+const { app, BrowserWindow, Electron, powerSaveBlocker } = require('electron')
+const log = require('electron-log')
+log.transports.file.level = 'silly'
+log.transports.file.file = path.join(
+  app.getPath('userData'),
+  settings.file_prefix + '_' + moment().format('YYYYMMDDddd') + '.txt'
+)
+
+const printer = require('./printer')
 
 /**
  * DataStore w/ nedb
  */
-const DB_PREFIX = 'yoshigai'
 const Datastore = require('nedb')
-const path = require('path')
 const db = new Datastore({
   autoload: true,
   filename: path.join(
-    app.getPath('desktop'),
-    DB_PREFIX + '_' + moment().format('YYYYMMDDddd') + '.db'
+    app.getPath('userData'),
+    settings.file_prefix + '_' + moment().format('YYYYMMDDddd') + '.db'
   ),
   timestampData: true
 })
-log.debug('nedb: ', db)
+// log.debug('nedb:', db)
 
 function getLatestBook() {
-  return db
-    .find({})
+  log.silly('getLatestBook()')
+  db
+    .find({ currentNo: { $exists: false } })
     .sort({ no: -1 })
-    .exec((err, docs) => {
-      log.info(docs)
+    .limit(1)
+    .exec((err, book) => {
+      if (err) log.error('getLatestBook() ERROR:', err)
+      if (book == []) return false
+      log.info('latestBook:', book)
+      return book
     })
 }
 
-function getCurrentNo() {
-  log.info('getLatestBook(): ', getLatestBook())
-  return 0
-}
-
 function getBookableTime() {
-  return '00:00'
+  log.silly('getBookableTime()')
+  const lastOrder = moment(settings.lastOrder, 'HH:mm')
+  const latestBook = getLatestBook()
+  if (latestBook) {
+    const latestBookedTime = moment(latestBook.bookedTime, 'HH:mm')
+    const bookableTime = latestBookedTime.add(
+      settings.experienceTime,
+      'minutes'
+    )
+    if (bookableTime.isBefore(moment())) {
+      return bookableTime('SOON')
+    }
+    if (bookableTime.isBefore(lastOrder)) {
+      return bookableTime.format('HH:mm')
+    } else {
+      return 'END'
+    }
+  }
 }
 
-function print() {
-  let doc = {
-    no: getCurrentNo() + 1
+function book() {
+  log.silly('book()')
+  const bookableTime = getBookableTime()
+  if (!bookableTime) {
+    return
   }
-  db.insert(doc, () => {
-    log.info('db insert()')
+  let ticket = {
+    no: latestNo + 1,
+    bookedTime: bookableTime.format('HH:mm')
+  }
+  db.insert(ticket, () => {
+    log.info('nedb.insert():', ticket)
   })
+}
+
+function next() {
+  log.silly('next()')
+  currentNo += 1
+}
+
+function print(no, bookedTime) {
+  log.silly('print():', no, bookedTime)
   new printer().print(
-    // XXX: Just Debug!!
     settings.exhibitorName,
     settings.exhibitionTitle,
-    getCurrentNo(),
-    getBookableTime(),
+    no,
+    bookedTime,
     settings.note
   )
 }
@@ -70,26 +113,29 @@ function print() {
  */
 const HTTP = require('http')
 const NodeStatic = require('node-static')
-const nodeStaticServer = new NodeStatic.Server(__dirname + '/public', {
-  cache: false,
-  headers: {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'GET',
-    'Access-Control-Allow-Headers': 'Content-Type'
+const nodeStaticServer = new NodeStatic.Server(
+  path.join(__dirname, '/public'),
+  {
+    cache: false,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET',
+      'Access-Control-Allow-Headers': 'Content-Type'
+    }
   }
-})
+)
 log.debug('nodeStaticServer: ', nodeStaticServer)
 const httpServer = HTTP.createServer((request, response) => {
   request
     .addListener('error', err => {
-      log.error('HTTP ERROR: ', err)
+      log.error('HTTP ERROR:', err)
     })
     .addListener('end', () => {
       nodeStaticServer.serve(request, response)
     })
     .resume()
-}).listen(1997)
-log.debug('httpServer: ', httpServer)
+}).listen(settings.port)
+log.debug('httpServer:', httpServer)
 
 /**
  * Socket.IO
@@ -97,50 +143,65 @@ log.debug('httpServer: ', httpServer)
 const socketio = require('socket.io')
 const io = socketio.listen(httpServer)
 io.sockets.on('connection', socket => {
-  log.debug('Socket.IO: ', socket)
+  // log.debug('Socket.IO:', socket)
 
   io.sockets.json.emit('settings', settings)
-  io.sockets.emit('currentNo', getCurrentNo())
-  io.sockets.emit('bookableTime', getBookableTime())
+  update()
 
   socket.on('message', data => {
     log.debug('message: ', data)
 
     switch (data.code) {
-    case settings.printKey:
+    case settings.keyPrint:
+      book()
       print()
       break
-    case settings.nextKey:
+    case settings.keyNext:
+      next()
+      break
+    case settings.keyReprint:
       break
     default:
       break
     }
 
     io.sockets.emit('message', data)
+    update()
+  })
+
+  socket.on('update', data => {
+    log.debug('update: ', data)
+    update()
   })
 })
+
+async function update() {
+  log.silly('update()')
+  io.sockets.emit('currentNo', currentNo)
+  io.sockets.emit('bookableTime', await getBookableTime())
+}
 
 /**
  * Electron
  */
 let mainWindow
 const psb = powerSaveBlocker.start('prevent-display-sleep')
-
 function createWindow() {
+  log.silly('createWindow()')
   mainWindow = new BrowserWindow({
     acceptFirstMouse: true,
     allowRunningInsecureContent: true,
     alwaysOnTop: true,
     fullscreen: true,
-    width: 1920,
-    height: 1080,
+    // width: 1920,
+    // height: 1080,
     frame: false,
     kiosk: true,
     title: 'Numbered Ticket Terminal',
     webSecurity: false
   })
 
-  mainWindow.loadURL('http://0.0.0.0:1997/index.html')
+  mainWindow.loadURL(`http://0.0.0.0:${settings.port}/index.html`)
 
   if (!process.env.CI && !(process.env.NODE_ENV === 'production')) {
     // Open the DevTools
@@ -153,16 +214,19 @@ function createWindow() {
 }
 
 app.on('ready', () => {
+  log.silly('app.on("ready")')
   createWindow()
 })
 
 app.on('activate', () => {
+  log.silly('app.on("activate")')
   if (mainWindow === null) {
     createWindow()
   }
 })
 
 app.on('window-all-closed', () => {
+  log.info('---- window-all-closed -----')
   powerSaveBlocker.stop(psb)
   Electron.session.defaultSession.clearCache(() => {})
   if (process.platform !== 'darwin') {
