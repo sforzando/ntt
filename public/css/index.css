@@ -3,34 +3,22 @@
 
 body {
   cursor: none;
+  background-size: cover;
+  background-position: center;
+  background-image: url('//0.0.0.0:1997/image/index_background.png');
+  overflow: hidden;
+}
+
+::-webkit-scrollbar {
+  display: none;
 }
 
 .is-size-0 {
   font-size: 6rem;
 }
 
-.background {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-
-  box-sizing: border-box;
-
-  width: 100vw;
-  height: auto;
-  min-height: 100vh;
-
-  background-size: cover;
-  background-position: center;
-  background-image: url('//0.0.0.0:1997/image/index_background.png');
+.is-semitransparent {
+  background-color: rgba(255, 255, 255, 0.7);
 }
 
 #header {
@@ -50,7 +38,7 @@ body {
 }
 
 #left {
-  height: 75vh;
+  height: 77vh;
   font-family: 'mplus-1p-bold';
 }
 
@@ -59,7 +47,7 @@ body {
 }
 
 #right {
-  height: 75vh;
+  height: 77vh;
   font-family: 'mplus-1p-bold';
 }
 

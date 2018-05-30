@@ -7,7 +7,7 @@ let settings = {
   keyNext: 'KeyN',
   keyPrint: 'KeyP',
   keyReprint: 'KeyR',
-  lastOrder: '23:30', // = 閉館時刻(ex. 17:55) - experienceTime
+  lastOrder: '17:45', // = 閉館時刻5分前(ex. 17:55) - experienceTime
   note: '予定時刻の5分前にお越しください。',
   port: 1997
 }
@@ -22,7 +22,8 @@ const path = require('path')
 
 const { app, BrowserWindow, Electron, powerSaveBlocker } = require('electron')
 const log = require('electron-log')
-log.transports.file.level = 'silly'
+log.transports.console.level = 'silly'
+log.transports.file.level = 'debug'
 log.transports.file.file = path.join(
   app.getPath('userData'),
   settings.file_prefix + '_' + moment().format('YYYYMMDDddd') + '.txt'
@@ -90,7 +91,9 @@ function book() {
 
 function next() {
   log.silly('next()')
-  currentNo += 1
+  if (currentNo < latestNo) {
+    currentNo += 1
+  }
 }
 
 function print(no = latestNo, bookedTime = bookableTime) {
@@ -189,19 +192,22 @@ function createWindow() {
     allowRunningInsecureContent: true,
     alwaysOnTop: true,
     fullscreen: true,
-    // width: 1920,
-    // height: 1080,
+    width: 1920,
+    height: 1080,
     frame: false,
     kiosk: true,
     title: 'Numbered Ticket Terminal',
-    webSecurity: false
+    webSecurity: false,
+    webPreferences: {
+      experimentalFeatures: true
+    }
   })
 
   mainWindow.loadURL(`http://0.0.0.0:${settings.port}/index.html`)
 
   if (!process.env.CI && !(process.env.NODE_ENV === 'production')) {
     // Open the DevTools
-    mainWindow.webContents.openDevTools()
+    // mainWindow.webContents.openDevTools()
   }
 
   mainWindow.on('closed', () => {

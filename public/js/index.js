@@ -31,7 +31,6 @@ const socketio = io.connect()
 console.log('socketio:', socketio)
 socketio.on('connected', name => {
   console.log('socket.io connected:', name)
-  update()
 })
 socketio.on('settings', msg => {
   console.log('socket.io settings:', msg)

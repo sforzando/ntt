@@ -8,6 +8,7 @@
 
 - [How to Develop](#how-to-develop)
   - [Requirements](#requirements)
+  - [Install Libraries](#install-libraries)
 - [How to Build](#how-to-build)
   - [for MacOS](#for-macos)
   - [for Windows](#for-windows)
@@ -26,11 +27,11 @@
 
 ## How to Develop
 
-(T.B.D.)
-
 ### Requirements
 
 * Node.js (8 or higher)
+
+### Install Libraries
 
 ## How to Build
 
@@ -101,14 +102,13 @@ $ system_profiler SPUSBDataType
 {
   exhibitorName: "吉開菜央 | YOSHIGAI Nao",
   exhibitionTitle:
-    // \n で改行
     "《Grand Bouquet／いま いちばん美しいあなたたちへ》\n“Grand Bouquet”",
-  experienceTime: 10, // 体験時間[分]
-  file_prefix: "yoshigai", // データベース、ログファイルの接頭辞
+  experienceTime: 10,
+  file_prefix: "yoshigai",
   keyNext: "KeyN",
   keyPrint: "KeyP",
   keyReprint: "KeyR",
-  lastOrder: "17:45", // = 閉館時刻(ex. 17:55) - experienceTime
+  lastOrder: "17:45", // = 閉館時刻5分前(ex. 17:55) - experienceTime
   note: "予定時刻の5分前にお越しください。",
   port: 1997
 }
