@@ -90,7 +90,10 @@ function next() {
 
 function print(no = latestNo, bookedTime = bookableTime) {
   log.silly('print():', no, bookedTime)
-  new printer(settings.printer_vendorID, settings.printer_productID).print(
+  new printer(
+    parseInt(settings.printer_vendorID, 16),
+    parseInt(settings.printer_productID, 16)
+  ).print(
     settings.exhibitorName,
     settings.exhibitionTitle,
     no,
