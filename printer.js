@@ -113,7 +113,7 @@ module.exports = class Printer {
         .control('LF')
         .size(1, 1)
         .text(note)
-        .control('LF')
+        .feed(3)
         .cut()
         .close()
     })

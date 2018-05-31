@@ -187,8 +187,8 @@ function createWindow() {
     allowRunningInsecureContent: true,
     alwaysOnTop: true,
     fullscreen: true,
-    width: 1920,
-    height: 1080,
+    // width: 1920,
+    // height: 1080,
     frame: false,
     kiosk: true,
     title: 'Numbered Ticket Terminal',
@@ -202,7 +202,7 @@ function createWindow() {
 
   if (!process.env.CI && !(process.env.NODE_ENV === 'production')) {
     // Open the DevTools
-    mainWindow.webContents.openDevTools()
+    // mainWindow.webContents.openDevTools()
   }
 
   mainWindow.on('closed', () => {
