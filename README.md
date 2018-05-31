@@ -119,6 +119,7 @@ $ system_profiler SPUSBDataType
 
 * "exhibitorName"
   * 展示名
+    * 改行は`\n`で指定する
 * "exhibitionTitle"
   * 作家名
     * 改行は`\n`で指定する

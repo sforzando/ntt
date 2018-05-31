@@ -164,7 +164,7 @@ io.sockets.on('connection', socket => {
   })
 
   socket.on('update', data => {
-    log.debug('update: ', data)
+    log.silly('update: ', data)
     update()
   })
 })
