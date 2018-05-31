@@ -96,23 +96,56 @@ $ system_profiler SPUSBDataType
 
 ### Settings
 
-(T.B.D.)
+デスクトップに`ntt_settings.json`というファイル名で保存する。
 
 ```json
 {
-  exhibitorName: "吉開菜央 | YOSHIGAI Nao",
-  exhibitionTitle:
+  "_comment":
+    "こちらの設定情報をデスクトップへ ntt_settings.json の名前で保存してください。",
+  "exhibitorName": "吉開菜央 | YOSHIGAI Nao",
+  "exhibitionTitle":
     "《Grand Bouquet／いま いちばん美しいあなたたちへ》\n“Grand Bouquet”",
-  experienceTime: 10,
-  file_prefix: "yoshigai",
-  keyNext: "KeyN",
-  keyPrint: "KeyP",
-  keyReprint: "KeyR",
-  lastOrder: "17:45", // = 閉館時刻5分前(ex. 17:55) - experienceTime
-  note: "予定時刻の5分前にお越しください。",
-  port: 1997
+  "experienceTime": 20,
+  "keyNext": "KeyN",
+  "keyPrint": "KeyP",
+  "keyReprint": "KeyR",
+  "lastOrder": "17:45",
+  "print_note": "予定時刻の5分前にお越しください。",
+  "port": 1997,
+  "printer_vendorID": "0x04b8",
+  "printer_productID": "0x0e02"
 }
 ```
+
+* "exhibitorName"
+  * 展示名
+* "exhibitionTitle"
+  * 作家名
+    * 改行は`\n`で指定する
+* "experienceTime"
+  * 体験時間、単位は**分**
+* "keyNext"
+  * `Next`に割り当てるキー
+    * cf. [KeyboardEvent.code](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/code)
+* "keyPrint"
+  * `Print`に割り当てるキー
+* "keyReprint
+  * `Reprint`に割り当てるキー
+* "lastOrder"
+  * 最終受付時刻
+    * 慣例では、`閉館時刻の5分前 - 体験時間`
+* "print_note"
+  * 発券末尾に記載する特記事項
+* "port"
+  * Web サーバ、Socket.IO サーバが起動するポート
+* "printer_vendorID"
+  * サーマルプリンタの製造元 ID
+    * MacOS の場合、前述の`system_profiler SPUSBDataType`コマンド、またはシステムレポートから照会可能
+    * JSON は 16 進数を直接記載できないため、**ダブルクォート(=文字列)** している
+* "printer_productID"
+  * サーマルプリンタの製品 ID
+
+![system_report](https://user-images.githubusercontent.com/32637762/40765182-a023307c-64e6-11e8-8842-89ad9a920753.png)
 
 ### On MediaWall
 

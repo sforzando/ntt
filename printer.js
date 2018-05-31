@@ -1,16 +1,24 @@
 /* eslint no-console: 0 */
 
 const escpos = require('escpos')
-const deviceInformation = escpos.USB.findPrinter()[0]
-console.log('deviceInformation: ', deviceInformation)
-const device = new escpos.USB(
-  deviceInformation.deviceDescriptor.idVendor,
-  deviceInformation.deviceDescriptor.idProduct
-)
-const printer = new escpos.Printer(device, { encoding: 'CP932' })
+let device, printer
 
 module.exports = class Printer {
-  constructor() {}
+  constructor(vendorID, productID) {
+    const deviceInformation = escpos.USB.findPrinter()
+    console.log('deviceInformation: ', deviceInformation)
+    if (0 < deviceInformation.length) {
+      // findPrinterで見つかったとき
+      device = new escpos.USB(
+        deviceInformation[0].deviceDescriptor.idVendor,
+        deviceInformation[0].deviceDescriptor.idProduct
+      )
+    } else {
+      // findPrinterで見つからなかったとき
+      device = new escpos.USB(vendorID, productID)
+    }
+    printer = new escpos.Printer(device, { encoding: 'CP932' })
+  }
 
   sample() {
     device.open(() => {

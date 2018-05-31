@@ -1,22 +1,9 @@
-let settings = {
-  exhibitorName: '吉開菜央 | YOSHIGAI Nao',
-  exhibitionTitle:
-    '《Grand Bouquet／いま いちばん美しいあなたたちへ》\n“Grand Bouquet”',
-  experienceTime: 10,
-  file_prefix: 'yoshigai',
-  keyNext: 'KeyN',
-  keyPrint: 'KeyP',
-  keyReprint: 'KeyR',
-  lastOrder: '17:45', // = 閉館時刻5分前(ex. 17:55) - experienceTime
-  note: '予定時刻の5分前にお越しください。',
-  port: 1997
-}
-
 let currentNo = 0
 let latestNo = 0
 let books = []
 let bookableTime = ''
 
+const fs = require('fs')
 const moment = require('moment')
 const path = require('path')
 
@@ -26,8 +13,13 @@ log.transports.console.level = 'silly'
 log.transports.file.level = 'debug'
 log.transports.file.file = path.join(
   app.getPath('userData'),
-  settings.file_prefix + '_' + moment().format('YYYYMMDDddd') + '.txt'
+  'ntt_' + moment().format('YYYYMMDDddd') + '.txt'
 )
+
+let settings = JSON.parse(
+  fs.readFileSync(path.join(app.getPath('desktop'), 'ntt_settings.json'))
+)
+log.debug('settings:', settings)
 
 const printer = require('./printer')
 
@@ -98,12 +90,12 @@ function next() {
 
 function print(no = latestNo, bookedTime = bookableTime) {
   log.silly('print():', no, bookedTime)
-  new printer().print(
+  new printer(settings.printer_vendorID, settings.printer_productID).print(
     settings.exhibitorName,
     settings.exhibitionTitle,
     no,
     bookedTime,
-    settings.note
+    settings.print_note
   )
 }
 
@@ -207,7 +199,7 @@ function createWindow() {
 
   if (!process.env.CI && !(process.env.NODE_ENV === 'production')) {
     // Open the DevTools
-    // mainWindow.webContents.openDevTools()
+    mainWindow.webContents.openDevTools()
   }
 
   mainWindow.on('closed', () => {
