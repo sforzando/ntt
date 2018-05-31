@@ -7,10 +7,7 @@
     "url": "git+https://github.com/sforzando/ntt.git"
   },
   "main": "main.js",
-  "keywords": [
-    "electron",
-    "Socket.IO"
-  ],
+  "keywords": ["electron", "Socket.IO"],
   "author": "sforzando LLC.",
   "license": "MIT",
   "build": {
@@ -47,20 +44,19 @@
   "scripts": {
     "clean": "echo \"Error: no clean command specified\" && exit 1",
     "build": "npm run build:mac",
-    "build:mac": "NODE_ENV=production electron-builder --mac --x64",
-    "build:lecture": "NODE_ENV=production electron-builder --mac --x64 -c.mac.icon=build/icons/ntt-lecture.icns",
-    "build:win": "NODE_ENV=production electron-builder --win --x64",
+    "build:mac": "electron-builder --mac --x64",
+    "build:lecture":
+      "electron-builder --mac --x64 -c.mac.icon=build/icons/ntt-lecture.icns",
+    "build:win": "electron-builder --win --x64",
     "format": "prettier-eslint \"src/**/*.js\"",
     "postinstall": "electron-builder install-app-deps",
-    "preview": "static -a 0.0.0.0 -p 1997 -c 0 -H '{\"Access-Control-Allow-Origin\": \"*\"}' public",
+    "preview":
+      "static -a 0.0.0.0 -p 1997 -c 0 -H '{\"Access-Control-Allow-Origin\": \"*\"}' public",
     "precommit": "lint-staged",
     "start": "electron .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "lint-staged": {
-    "*.js": [
-      "prettier-eslint --write",
-      "git add"
-    ]
+    "*.js": ["prettier-eslint --write", "git add"]
   }
 }
