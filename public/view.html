@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Numbered Ticket Terminal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" crossorigin />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css" crossorigin />
+  <link rel="stylesheet" href="./css/index.css" />
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <!-- vue-devtools -->
+  <!-- <script src="http://0.0.0.0:8098"></script> -->
+  <script src="http://momentjs.com/downloads/moment.min.js"></script>
+</head>
+
+<body>
+  <section id="header">
+    <div class="container is-fluid">
+      <div class="columns level">
+        <div id="title" class="column level-item is-7">
+          <span id="exhibitorName" class="is-size-1 has-text-justified" style="white-space: pre;">{{ exhibitorName }}</span>
+          <div class="has-text-justified">
+            <span id="exhibitionTitle" class="is-size-2" style="white-space: pre;">{{ exhibitionTitle }}</span>
+          </div>
+        </div>
+        <div class="column level-item is-5">
+          <div class="notification is-large">
+            <div class="columns level">
+              <div id="status" class="column level-item is-2 has-text-centered">
+                <span class="icon is-large">
+                  <i class="fas fa-check-circle fa-4x"></i>
+                </span>
+              </div>
+              <div class="column level-item is-10">
+                <span class="is-size-2">予約状況のお知らせ</span>
+                <br>
+                <span class="is-size-2">Status of Reservation</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="body">
+    <div class="container is-fluid">
+      <div class="columns">
+        <div class="column">
+          <div id="left" class="box has-text-centered is-semitransparent">
+            <span class="is-size-1">現在体験中</span>
+            <br>
+            <span class="is-size-2">The current session No.</span>
+            <div id="currentNo" class="box is-size-0 has-text-centered">{{ currentNo }}</div>
+          </div>
+        </div>
+        <div class="column">
+          <div id="right" class="box has-text-centered is-semitransparent">
+            <span class="is-size-1">予約可能な体験時刻</span>
+            <br>
+            <span class="is-size-2">The next bookable time</span>
+            <div id="bookableTime" class="box is-size-0 has-text-centered">{{ bookableTime }}</div>
+            <span class="is-size-1">現在の時刻</span>
+            <br>
+            <span class="is-size-2">The current time</span>
+            <div id="currentTime" class="box is-size-0 has-text-centered">{{ currentTime }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <audio id="sound_ok" preload="auto">
+    <source src="./sound/se_ok.wav" />
+  </audio>
+  <audio id="sound_ng" preload="auto">
+    <source src="./sound/se_ng.wav" />
+  </audio>
+  <script src="js/socket.io.js"></script>
+  <script src="js/index.js"></script>
+</body>
+
+</html>
