@@ -18,26 +18,24 @@
   <section id="header">
     <div class="container is-fluid">
       <div class="columns level">
-        <div id="title" class="column level-item is-6">
+        <div id="title" class="column level-item is-7">
           <span id="exhibitorName" class="is-size-1 has-text-justified" style="white-space: pre;">{{ exhibitorName }}</span>
           <div class="has-text-justified">
             <span id="exhibitionTitle" class="is-size-2" style="white-space: pre;">{{ exhibitionTitle }}</span>
           </div>
         </div>
-        <div class="column level-item is-6">
-          <div class="message is-large">
-            <div class="message-body">
-              <div class="columns level">
-                <div id="status" class="column level-item is-2 has-text-centered">
-                  <span class="icon is-large">
-                    <i class="fas fa-check-circle fa-4x"></i>
-                  </span>
-                </div>
-                <div class="column level-item is-10">
-                  <span class="is-size-2">予約状況のお知らせ</span>
-                  <br>
-                  <span class="is-size-2">Status of Reservation</span>
-                </div>
+        <div class="column level-item is-5">
+          <div class="notification is-large">
+            <div class="columns level">
+              <div id="status" class="column level-item is-2 has-text-centered">
+                <span class="icon is-large">
+                  <i class="fas fa-check-circle fa-4x"></i>
+                </span>
+              </div>
+              <div class="column level-item is-10">
+                <span class="is-size-2">予約状況のお知らせ</span>
+                <br>
+                <span class="is-size-2">Status of Reservation</span>
               </div>
             </div>
           </div>
@@ -62,10 +60,10 @@
             <br>
             <span class="is-size-2">The next bookable time</span>
             <div id="bookableTime" class="box is-size-0 has-text-centered">{{ bookableTime }}</div>
-            <span class="is-size-1">現在の時刻</span>
+            <!-- <span class="is-size-1">現在の時刻</span>
             <br>
-            <span class="is-size-2">The current time</span>
-            <div id="currentTime" class="box is-size-0 has-text-centered">{{ currentTime }}</div>
+            <span class="is-size-2">The current time</span> -->
+            <div id="currentTime" class="box is-size-0 is-hidden-widescreen has-text-centered">{{ currentTime }}</div>
           </div>
         </div>
       </div>

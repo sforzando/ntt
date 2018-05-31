@@ -1,18 +1,26 @@
 /* eslint no-console: 0 */
 
 const escpos = require('escpos')
-const deviceInformation = escpos.USB.findPrinter()[0]
-console.log('deviceInformation: ', deviceInformation)
-const device = new escpos.USB(
-  deviceInformation.deviceDescriptor.idVendor,
-  deviceInformation.deviceDescriptor.idProduct
-)
-const printer = new escpos.Printer(device, { encoding: 'CP932' })
+let device, printer
 
 module.exports = class Printer {
-  constructor() {}
+  constructor(vendorID, productID) {
+    const deviceInformation = escpos.USB.findPrinter()
+    console.log('deviceInformation: ', deviceInformation)
+    if (0 < deviceInformation.length) {
+      // findPrinterで見つかったとき
+      device = new escpos.USB(
+        deviceInformation[0].deviceDescriptor.idVendor,
+        deviceInformation[0].deviceDescriptor.idProduct
+      )
+    } else {
+      // findPrinterで見つからなかったとき
+      device = new escpos.USB(vendorID, productID)
+    }
+    printer = new escpos.Printer(device, { encoding: 'Shift_JIS' })
+  }
 
-  sample() {
+  test() {
     device.open(() => {
       printer
         .align('ct')
@@ -82,8 +90,11 @@ module.exports = class Printer {
   ) {
     device.open(() => {
       printer
+        .print('\x1b\x52\x08') // 国際文字セットを「日本」へ
+        .print('\x1b\x74\x01') // 拡張ASCIIテーブルを「カタカナ」へ
+        .print('\x1c\x43\x01') // 文字コードを「Shift_JIS」へ
         .font('a')
-        .size(2, 2)
+        .size(1, 1)
         .align('CT')
         .style('b')
         .text(exhibitor)
@@ -91,16 +102,18 @@ module.exports = class Printer {
         .control('LF')
         .text('番号')
         .style('bu')
+        .size(2, 2)
         .text(number)
         .control('LF')
         .style('b')
         .text('予定時刻')
         .style('bu')
+        .size(2, 2)
         .text(time)
         .control('LF')
         .size(1, 1)
         .text(note)
-        .control('LF')
+        .feed(3)
         .cut()
         .close()
     })
