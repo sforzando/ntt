@@ -4,9 +4,10 @@ const device = new escpos.USB(
   deviceInformation.deviceDescriptor.idVendor,
   deviceInformation.deviceDescriptor.idProduct
 )
-printer = new escpos.Printer(device, {})
+const printer = new escpos.Printer(device, { encoding: 'Shift_JIS' })
 
 device.open(() => {
+  printer.buffer.write('\x1b \x52 \x08 \x1b \x74 \x01 \x1c \x43 \x01').flush()
   printer
     .font('a')
     .align('ct')
