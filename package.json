@@ -7,13 +7,11 @@
     "url": "git+https://github.com/sforzando/ntt.git"
   },
   "main": "main.js",
-  "keywords": [
-    "electron"
-  ],
+  "keywords": ["electron", "Socket.IO"],
   "author": "sforzando LLC.",
   "license": "MIT",
   "build": {
-    "productName": "Numbered Ticket Terminal",
+    "productName": "NumberedTicketTerminal",
     "appId": "jp.co.sforzando.ntt",
     "mac": {
       "icon": "build/icons/ntt.icns",
@@ -28,10 +26,15 @@
     }
   },
   "dependencies": {
+    "electron-log": "^2.2.14",
+    "escpos": "^2.4.9",
+    "moment": "^2.22.1",
+    "nedb": "^1.8.0",
     "node-static": "^0.7.10",
-    "electron-log": "^2.2.14"
+    "socket.io": "^2.1.1"
   },
   "devDependencies": {
+    "@vue/devtools": "^1.1.0",
     "electron": "^2.0.2",
     "electron-builder": "^20.14.7",
     "husky": "^0.14.3",
@@ -42,17 +45,18 @@
     "clean": "echo \"Error: no clean command specified\" && exit 1",
     "build": "npm run build:mac",
     "build:mac": "electron-builder --mac --x64",
-    "build:lecture": "electron-builder --mac --x64 -c.mac.icon=build/icons/ntt-lecture.icns",
+    "build:lecture":
+      "electron-builder --mac --x64 -c.mac.icon=build/icons/ntt-lecture.icns",
     "build:win": "electron-builder --win --x64",
     "format": "prettier-eslint \"src/**/*.js\"",
+    "postinstall": "electron-builder install-app-deps",
+    "preview":
+      "static -a 0.0.0.0 -p 1997 -c 0 -H '{\"Access-Control-Allow-Origin\": \"*\"}' public",
+    "precommit": "lint-staged",
     "start": "electron .",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "precommit": "lint-staged"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "lint-staged": {
-    "*.js": [
-      "prettier-eslint --write",
-      "git add"
-    ]
+    "*.js": ["prettier-eslint --write", "git add"]
   }
 }
