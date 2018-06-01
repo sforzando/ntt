@@ -1,7 +1,6 @@
 let currentNo = 0
 let latestNo = 0
 let books = []
-let bookableTime = ''
 
 const fs = require('fs')
 const moment = require('moment')
@@ -68,7 +67,7 @@ function getBookableTime() {
 
 function book() {
   log.silly('book()')
-  bookableTime = getBookableTime()
+  const bookableTime = getBookableTime()
   if (bookableTime == 'CLOSE') {
     return false
   }
@@ -78,7 +77,11 @@ function book() {
   }
   books.push(book)
   print(latestNo, bookableTime)
+  print(latestNo, bookableTime)
   latestNo += 1
+  if (moment(bookableTime, 'HH:mm').isSame(moment())) {
+    currentNo += 1
+  }
 }
 
 function next() {
@@ -88,7 +91,7 @@ function next() {
   }
 }
 
-function print(no = latestNo, bookedTime = bookableTime) {
+function print(no = latestNo, bookedTime = getBookableTime()) {
   log.silly('print():', no, bookedTime)
   new printer(
     parseInt(settings.printer_vendorID, 16),
@@ -153,7 +156,7 @@ io.sockets.on('connection', socket => {
       next()
       break
     case settings.keyReprint:
-      print()
+      // print()
       break
     default:
       break
