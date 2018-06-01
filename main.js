@@ -77,9 +77,10 @@ function book() {
   }
   books.push(book)
   print(latestNo, bookableTime)
-  print(latestNo, bookableTime)
   latestNo += 1
-  if (moment(bookableTime, 'HH:mm').isSame(moment())) {
+  log.debug('bookable:', moment(bookableTime, 'HH:mm'))
+  log.debug('current:', moment())
+  if (moment(bookableTime, 'HH:mm').diff(moment()) < 3500) {
     currentNo += 1
   }
 }
