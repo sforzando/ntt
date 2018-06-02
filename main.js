@@ -11,6 +11,7 @@ log.transports.console.level = 'debug'
 log.transports.file.level = 'debug'
 log.transports.file.file = path.join(
   app.getPath('userData'),
+  'log',
   'ntt_' + moment().format('YYYYMMDDddd') + '.txt'
 )
 
