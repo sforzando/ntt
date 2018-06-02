@@ -24,7 +24,7 @@ module.exports = class Printer {
     device.open(() => {
       printer
         .align('ct')
-        .size(2, 2)
+        .size(1, 1)
         .font('a')
         .text('a')
         .style('b')

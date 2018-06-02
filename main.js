@@ -1,5 +1,4 @@
 let currentNo = 0
-let latestNo = 0
 let books = []
 
 const fs = require('fs')
@@ -8,7 +7,7 @@ const path = require('path')
 
 const { app, BrowserWindow, Electron, powerSaveBlocker } = require('electron')
 const log = require('electron-log')
-log.transports.console.level = 'silly'
+log.transports.console.level = 'debug'
 log.transports.file.level = 'debug'
 log.transports.file.file = path.join(
   app.getPath('userData'),
@@ -54,12 +53,14 @@ function getBookableTime() {
         return bookableTime.format('HH:mm')
       }
     } else {
+      currentNo = '-'
       return 'CLOSE'
     }
   } else {
     if (currentTime.isBefore(lastOrder)) {
-      return currentTime.format('HH:mm')
+      return '00:00' // First Book as TEST by Navigator Staff
     } else {
+      currentNo = '-'
       return 'CLOSE'
     }
   }
@@ -70,8 +71,8 @@ function book() {
   log.debug(
     'book() -> currentNo:',
     currentNo,
-    'latestNo:',
-    latestNo,
+    'books.length:',
+    books.length,
     'bookableTime:',
     bookableTime
   )
@@ -79,26 +80,38 @@ function book() {
     return false
   }
   let book = {
-    no: latestNo,
+    no: books.length,
     bookedTime: bookableTime
   }
   books.push(book)
   if (moment(bookableTime, 'HH:mm').diff(moment()) < 3500) {
-    currentNo += 1
+    next()
   }
-  latestNo += 1
-  log.debug('print() -> latestNo:', latestNo, 'bookableTime:', bookableTime)
-  print(latestNo, bookableTime)
+  log.debug(
+    'print() -> no(= books.length - 1):',
+    parseInt(books[books.length - 1].no),
+    'bookableTime:',
+    bookableTime
+  )
+  print(
+    parseInt(books[books.length - 1].no),
+    books[books.length - 1].bookedTime
+  )
 }
 
 function next() {
-  log.silly('next()')
-  if (currentNo < latestNo) {
-    currentNo += 1
+  log.debug('next()')
+  if (books.length) {
+    if (currentNo < books[books.length - 1].no) {
+      currentNo += 1
+    }
   }
 }
 
-function print(no = latestNo, bookedTime = getBookableTime()) {
+function print(
+  no = parseInt(books[books.length - 1].no) - 1,
+  bookedTime = books[books.length - 1].bookedTime
+) {
   log.silly('print():', no, bookedTime)
   new printer(
     parseInt(settings.printer_vendorID, 16),
