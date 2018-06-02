@@ -66,8 +66,15 @@ function getBookableTime() {
 }
 
 function book() {
-  log.silly('book()')
   const bookableTime = getBookableTime()
+  log.debug(
+    'book() -> currentNo:',
+    currentNo,
+    'latestNo:',
+    latestNo,
+    'bookableTime:',
+    bookableTime
+  )
   if (bookableTime == 'CLOSE') {
     return false
   }
@@ -76,13 +83,12 @@ function book() {
     bookedTime: bookableTime
   }
   books.push(book)
-  print(latestNo, bookableTime)
-  latestNo += 1
-  log.debug('bookable:', moment(bookableTime, 'HH:mm'))
-  log.debug('current:', moment())
   if (moment(bookableTime, 'HH:mm').diff(moment()) < 3500) {
     currentNo += 1
   }
+  latestNo += 1
+  log.debug('print() -> latestNo:', latestNo, 'bookableTime:', bookableTime)
+  print(latestNo, bookableTime)
 }
 
 function next() {
