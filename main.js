@@ -1,7 +1,5 @@
 let currentNo = 0
-let latestNo = 0
 let books = []
-let bookableTime = ''
 
 const fs = require('fs')
 const moment = require('moment')
@@ -9,10 +7,11 @@ const path = require('path')
 
 const { app, BrowserWindow, Electron, powerSaveBlocker } = require('electron')
 const log = require('electron-log')
-log.transports.console.level = 'silly'
+log.transports.console.level = 'debug'
 log.transports.file.level = 'debug'
 log.transports.file.file = path.join(
   app.getPath('userData'),
+  'log',
   'ntt_' + moment().format('YYYYMMDDddd') + '.txt'
 )
 
@@ -55,40 +54,65 @@ function getBookableTime() {
         return bookableTime.format('HH:mm')
       }
     } else {
+      currentNo = '-'
       return 'CLOSE'
     }
   } else {
     if (currentTime.isBefore(lastOrder)) {
-      return currentTime.format('HH:mm')
+      return '00:00' // First Book as TEST by Navigator Staff
     } else {
+      currentNo = '-'
       return 'CLOSE'
     }
   }
 }
 
 function book() {
-  log.silly('book()')
-  bookableTime = getBookableTime()
+  const bookableTime = getBookableTime()
+  log.debug(
+    'book() -> currentNo:',
+    currentNo,
+    'books.length:',
+    books.length,
+    'bookableTime:',
+    bookableTime
+  )
   if (bookableTime == 'CLOSE') {
     return false
   }
   let book = {
-    no: latestNo,
+    no: books.length,
     bookedTime: bookableTime
   }
   books.push(book)
-  print(latestNo, bookableTime)
-  latestNo += 1
+  if (moment(bookableTime, 'HH:mm').diff(moment()) < 3500) {
+    next()
+  }
+  log.debug(
+    'print() -> no(= books.length - 1):',
+    parseInt(books[books.length - 1].no),
+    'bookableTime:',
+    bookableTime
+  )
+  print(
+    parseInt(books[books.length - 1].no),
+    books[books.length - 1].bookedTime
+  )
 }
 
 function next() {
-  log.silly('next()')
-  if (currentNo < latestNo) {
-    currentNo += 1
+  log.debug('next()')
+  if (books.length) {
+    if (currentNo < books[books.length - 1].no) {
+      currentNo += 1
+    }
   }
 }
 
-function print(no = latestNo, bookedTime = bookableTime) {
+function print(
+  no = parseInt(books[books.length - 1].no) - 1,
+  bookedTime = books[books.length - 1].bookedTime
+) {
   log.silly('print():', no, bookedTime)
   new printer(
     parseInt(settings.printer_vendorID, 16),
@@ -153,7 +177,7 @@ io.sockets.on('connection', socket => {
       next()
       break
     case settings.keyReprint:
-      print()
+      // print()
       break
     default:
       break

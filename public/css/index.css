@@ -5,7 +5,7 @@ body {
   cursor: none;
   background-size: cover;
   background-position: center;
-  background-image: url('//0.0.0.0:1997/image/index_background.png');
+  background-image: url('/image/index_background.png');
   overflow: hidden;
 }
 
