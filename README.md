@@ -44,7 +44,7 @@ $ npm build:mac
 * インストーラ
   * MacOS: `build/NumberedTicketTerminal.dmg`
 * アプリケーション
-  * MacOS: `build/NumberedTicketTerminal.app`
+  * MacOS: `build/mac/NumberedTicketTerminal.app`
 
 ### for Windows
 
@@ -55,7 +55,7 @@ $ npm build:win
 * インストーラ
   * Windows: `build\NumberedTicketTerminal Setup.exe`
 * アプリケーション
-  * Windows: `build\NumberedTicketTerminal.exe`
+  * Windows: `build\win\NumberedTicketTerminal.exe`
 
 ## How to Deploy
 
@@ -150,15 +150,20 @@ $ system_profiler SPUSBDataType
 
 ### On MediaWall
 
-(T.B.D.)
+[http://<IP_ADDRESS>:1997/view/html](http://<IP_ADDRESS>:1997/view/html)を参照すれば、`PRINT/NEXT`キーが効かない安全な状態で閲覧可能。
+
+※ Proxyの設定に注意。
 
 ### From Office
 
-(T.B.D.)
+同上。
+ゆくゆく、発券ログ画面を実装する予定。
 
 ## How to Use
 
 ### Operation Flow
+
+鹿島田氏のメモより抜粋。
 
 #### Issuing Ticket
 
