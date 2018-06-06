@@ -61,7 +61,7 @@ function getBookableTime() {
     if (currentTime.isBefore(lastOrder)) {
       return '00:00' // First Book as TEST by Navigator Staff
     } else {
-      currentNo = '-'
+      // currentNo = '-' // Fix by ShipeiUeda
       return 'CLOSE'
     }
   }
@@ -226,7 +226,7 @@ function createWindow() {
 
   if (!process.env.CI && !(process.env.NODE_ENV === 'production')) {
     // Open the DevTools
-    // mainWindow.webContents.openDevTools()
+    mainWindow.webContents.openDevTools()
   }
 
   mainWindow.on('closed', () => {
