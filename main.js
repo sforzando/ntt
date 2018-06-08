@@ -226,7 +226,7 @@ function createWindow() {
 
   if (!process.env.CI && !(process.env.NODE_ENV === 'production')) {
     // Open the DevTools
-    mainWindow.webContents.openDevTools()
+    // mainWindow.webContents.openDevTools()
   }
 
   mainWindow.on('closed', () => {
