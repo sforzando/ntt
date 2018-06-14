@@ -20,8 +20,6 @@ let settings = JSON.parse(
 )
 log.debug('settings:', settings)
 
-const printer = require('./printer')
-
 /**
  * DataStore w/ nedb
  */
@@ -54,14 +52,12 @@ function getBookableTime() {
         return bookableTime.format('HH:mm')
       }
     } else {
-      currentNo = '-'
       return 'CLOSE'
     }
   } else {
     if (currentTime.isBefore(lastOrder)) {
-      return '00:00' // First Book as TEST by Navigator Staff
+      return '00:00' // First TEST Book by Navigator Staff
     } else {
-      // currentNo = '-' // Fix by ShipeiUeda
       return 'CLOSE'
     }
   }
@@ -110,20 +106,25 @@ function next() {
 }
 
 function print(
-  no = parseInt(books[books.length - 1].no) - 1,
+  no = parseInt(books[books.length - 1].no),
   bookedTime = books[books.length - 1].bookedTime
 ) {
   log.silly('print():', no, bookedTime)
-  new printer(
-    parseInt(settings.printer_vendorID, 16),
-    parseInt(settings.printer_productID, 16)
-  ).print(
-    settings.exhibitorName,
-    settings.exhibitionTitle,
-    no,
-    bookedTime,
-    settings.print_note
-  )
+  if (process.env.NODE_ENV != 'development') {
+    const printer = require('./printer')
+    new printer(
+      parseInt(settings.printer_vendorID, 16),
+      parseInt(settings.printer_productID, 16)
+    ).print(
+      settings.exhibitorName,
+      settings.exhibitionTitle,
+      no,
+      bookedTime,
+      settings.print_note
+    )
+  } else {
+    log.info('No Printer!')
+  }
 }
 
 /**
@@ -177,7 +178,7 @@ io.sockets.on('connection', socket => {
       next()
       break
     case settings.keyReprint:
-      // print()
+      print()
       break
     default:
       break
@@ -211,8 +212,6 @@ function createWindow() {
     allowRunningInsecureContent: true,
     alwaysOnTop: true,
     fullscreen: true,
-    // width: 1920,
-    // height: 1080,
     frame: false,
     kiosk: true,
     title: 'Numbered Ticket Terminal',
@@ -224,9 +223,9 @@ function createWindow() {
 
   mainWindow.loadURL(`http://0.0.0.0:${settings.port}/index.html`)
 
-  if (!process.env.CI && !(process.env.NODE_ENV === 'production')) {
-    // Open the DevTools
-    // mainWindow.webContents.openDevTools()
+  if (process.env.NODE_ENV == 'development') {
+    // Open DevTools
+    mainWindow.webContents.openDevTools()
   }
 
   mainWindow.on('closed', () => {
