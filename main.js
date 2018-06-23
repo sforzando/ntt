@@ -52,13 +52,13 @@ function getBookableTime() {
         return bookableTime.format('HH:mm')
       }
     } else {
-      return 'CLOSE'
+      return 'END'
     }
   } else {
     if (currentTime.isBefore(lastOrder)) {
       return '00:00' // First TEST Book by Navigator Staff
     } else {
-      return 'CLOSE'
+      return 'END'
     }
   }
 }
@@ -73,7 +73,7 @@ function book() {
     'bookableTime:',
     bookableTime
   )
-  if (bookableTime == 'CLOSE') {
+  if (bookableTime == 'END') {
     return false
   }
   let book = {
@@ -178,7 +178,7 @@ io.sockets.on('connection', socket => {
       next()
       break
     case settings.keyReprint:
-      print()
+      // print()
       break
     default:
       break
@@ -218,6 +218,7 @@ function createWindow() {
     webSecurity: false,
     webPreferences: {
       experimentalFeatures: true
+      // nodeIntegration: false
     }
   })
 
@@ -229,7 +230,6 @@ function createWindow() {
   }
 
   mainWindow.on('closed', () => {
-    Electron.session.defaultSession.clearCache(() => {})
     mainWindow = null
   })
 }

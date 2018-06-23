@@ -5,6 +5,8 @@
   <meta charset="UTF-8">
   <title>Numbered Ticket Terminal</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/earlyaccess/mplus1p.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css?family=Share+Tech+Mono" rel="stylesheet">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" crossorigin />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css" crossorigin />
   <link rel="stylesheet" href="./css/index.css" />
@@ -51,7 +53,7 @@
             <span class="is-size-1">現在体験中</span>
             <br>
             <span class="is-size-2">The current session No.</span>
-            <div id="currentNo" class="box is-size-0 has-text-centered">{{ currentNo }}</div>
+            <div id="currentNo" class="box is-size-0 has-text-centered numeric">{{ currentNo }}</div>
           </div>
         </div>
         <div class="column">
@@ -59,8 +61,8 @@
             <span class="is-size-1">次の予約時間</span>
             <br>
             <span class="is-size-2">The next bookable time</span>
-            <div id="bookableTime" class="box is-size-0 has-text-centered">{{ bookableTime }}</div>
-            <div id="currentTime" class="box is-size-0 is-hidden-widescreen has-text-centered">{{ currentTime }}</div>
+            <div id="bookableTime" class="box is-size-0 has-text-centered numeric">{{ bookableTime }}</div>
+            <div id="currentTime" class="box is-size-0 is-hidden-widescreen has-text-centered numeric">{{ currentTime }}</div>
           </div>
         </div>
       </div>
