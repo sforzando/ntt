@@ -229,6 +229,7 @@ function createWindow() {
   }
 
   mainWindow.on('closed', () => {
+    Electron.session.defaultSession.clearCache(() => {})
     mainWindow = null
   })
 }

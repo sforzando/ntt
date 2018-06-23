@@ -11,6 +11,7 @@
   "author": "sforzando LLC.",
   "license": "MIT",
   "build": {
+    "asar": false,
     "productName": "NumberedTicketTerminal",
     "appId": "jp.co.sforzando.ntt",
     "mac": {
