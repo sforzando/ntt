@@ -1,12 +1,16 @@
 @charset 'utf-8';
-@import url(https://mplus-webfonts.sourceforge.jp/mplus_webfonts.css);
 
 body {
   cursor: none;
   background-size: cover;
   background-position: center;
   background-image: url('/image/index_background.png');
+  font-family: 'Mplus 1p', sans-serif;
   overflow: hidden;
+}
+
+.numeric {
+  font-family: 'Share Tech Mono', monospace;
 }
 
 ::-webkit-scrollbar {
@@ -22,7 +26,7 @@ body {
 }
 
 #header {
-  font-family: 'mplus-1p-bold';
+  font-weight: 800;
 }
 
 #title {
@@ -39,22 +43,19 @@ body {
 
 #left {
   height: 77vh;
-  font-family: 'mplus-1p-bold';
+  font-weight: 800;
 }
 
 #currentNo {
-  font-family: 'mplus-1mn-bold';
 }
 
 #right {
   height: 77vh;
-  font-family: 'mplus-1p-bold';
+  font-weight: 800;
 }
 
 #bookableTime {
-  font-family: 'mplus-1mn-bold';
 }
 
 #currentTime {
-  font-family: 'mplus-1mn-bold';
 }

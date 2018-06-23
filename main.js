@@ -178,7 +178,7 @@ io.sockets.on('connection', socket => {
       next()
       break
     case settings.keyReprint:
-      print()
+      // print()
       break
     default:
       break
@@ -218,6 +218,7 @@ function createWindow() {
     webSecurity: false,
     webPreferences: {
       experimentalFeatures: true
+      // nodeIntegration: false
     }
   })
 
@@ -229,7 +230,6 @@ function createWindow() {
   }
 
   mainWindow.on('closed', () => {
-    Electron.session.defaultSession.clearCache(() => {})
     mainWindow = null
   })
 }

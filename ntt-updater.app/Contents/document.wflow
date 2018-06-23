@@ -63,8 +63,8 @@
 
 cd /Users/ntt/Documents/github.com/sforzando/ntt &amp;&amp; say "Change Directory"
 
-npm install &amp;&amp; say "npm install"
-npm start &amp; cliclick m:1920,1080</string>
+git fetch origin master
+git reset --hard origin/master</string>
 					<key>CheckedForUserDefaultShell</key>
 					<true/>
 					<key>inputMethod</key>
@@ -89,7 +89,7 @@ npm start &amp; cliclick m:1920,1080</string>
 				<key>Class Name</key>
 				<string>RunShellScriptAction</string>
 				<key>InputUUID</key>
-				<string>A9378760-7AAD-47AB-AF99-62CA950F9F49</string>
+				<string>2D6544AB-06D1-499C-B36F-602C18865D07</string>
 				<key>Keywords</key>
 				<array>
 					<string>Shell</string>
@@ -99,9 +99,9 @@ npm start &amp; cliclick m:1920,1080</string>
 					<string>Unix</string>
 				</array>
 				<key>OutputUUID</key>
-				<string>7C3B1949-48CC-44EB-A582-7FAFC0C97C88</string>
+				<string>60CE150D-03D7-4863-885E-629F15AD242F</string>
 				<key>UUID</key>
-				<string>0E46D3CF-0F4D-45B8-BABC-DE5B41F0E606</string>
+				<string>9F12678F-5303-4EB3-B097-0CF332B02089</string>
 				<key>UnlocalizedApplications</key>
 				<array>
 					<string>Automator</string>
@@ -179,7 +179,7 @@ npm start &amp; cliclick m:1920,1080</string>
 				<key>isViewVisible</key>
 				<true/>
 				<key>location</key>
-				<string>769.000000:253.000000</string>
+				<string>769.000000:305.000000</string>
 				<key>nibPath</key>
 				<string>/System/Library/Automator/Run Shell Script.action/Contents/Resources/English.lproj/main.nib</string>
 			</dict>

@@ -10,6 +10,9 @@ let settings = {
   lastOrder: ''
 }
 
+const is_local =
+  0 <= ['localhost', '127.0.0.1', '0.0.0.0'].indexOf(window.location.hostname)
+
 /**
  * Sound Effects
  */
@@ -69,10 +72,14 @@ function update() {
  */
 window.addEventListener('keyup', e => {
   console.info(e)
-  socketio.json.emit('message', { code: e.code }, response => {
-    console.log('socket.io response:', response)
-    play_ok()
-  })
+  if (is_local) {
+    socketio.json.emit('message', { code: e.code }, response => {
+      console.log('socket.io response:', response)
+      play_ok()
+    })
+  } else {
+    play_ng()
+  }
 })
 
 /**
