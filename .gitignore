@@ -140,4 +140,7 @@ build/*
 !build/icons
 !.gitkeep
 
+### Settings ###
+ntt_settings.json
+
 # End of https://www.gitignore.io/api/osx,node,code,linux,windows

@@ -1,14 +1,14 @@
 {
   "_comment":
-    "こちらの設定情報を適宜変更し、デスクトップにntt_settings.jsonの名前で保存してください。",
+    "こちらの設定情報をデスクトップへntt_settings.jsonの名前で保存してください。",
   "exhibitorName": "吉開菜央 | YOSHIGAI Nao",
   "exhibitionTitle":
     "《Grand Bouquet／いま いちばん美しいあなたたちへ》\n“Grand Bouquet”",
-  "experienceTime": 20,
+  "experienceTime": 25,
   "keyNext": "KeyN",
   "keyPrint": "KeyP",
   "keyReprint": "KeyR",
-  "lastOrder": "17:45",
+  "lastOrder": "17:30",
   "print_note": "予定時刻の5分前にお越しください。",
   "port": 1997,
   "printer_vendorID": "0x04b8",

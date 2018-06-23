@@ -63,7 +63,6 @@
 
 cd /Users/ntt/Documents/github.com/sforzando/ntt &amp;&amp; say "Change Directory"
 
-npm install &amp;&amp; say "npm install"
 npm start &amp; cliclick m:1920,1080</string>
 					<key>CheckedForUserDefaultShell</key>
 					<true/>
@@ -174,8 +173,6 @@ npm start &amp; cliclick m:1920,1080</string>
 						<string>4</string>
 					</dict>
 				</dict>
-				<key>conversionLabel</key>
-				<integer>0</integer>
 				<key>isViewVisible</key>
 				<true/>
 				<key>location</key>

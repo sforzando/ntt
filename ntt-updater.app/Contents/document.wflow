@@ -64,7 +64,10 @@
 cd /Users/ntt/Documents/github.com/sforzando/ntt &amp;&amp; say "Change Directory"
 
 git fetch origin master
-git reset --hard origin/master</string>
+git reset --hard origin/master
+
+npm install &amp;&amp; say "npm install"
+npm run build:mac &amp;&amp; say "build mac application"</string>
 					<key>CheckedForUserDefaultShell</key>
 					<true/>
 					<key>inputMethod</key>
@@ -174,12 +177,10 @@ git reset --hard origin/master</string>
 						<string>4</string>
 					</dict>
 				</dict>
-				<key>conversionLabel</key>
-				<integer>0</integer>
 				<key>isViewVisible</key>
 				<true/>
 				<key>location</key>
-				<string>769.000000:305.000000</string>
+				<string>769.000000:253.000000</string>
 				<key>nibPath</key>
 				<string>/System/Library/Automator/Run Shell Script.action/Contents/Resources/English.lproj/main.nib</string>
 			</dict>
