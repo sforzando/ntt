@@ -89,9 +89,9 @@ module.exports = class Printer {
     note = '予定時刻の5分前にお越しください。'
   ) {
     device.open(() => {
-      let currentDate, currentTime;
-      currentDate = new Date();
-      currentTime = currentDate.getHours() + ':' + currentDate.getMinutes();
+      let currentDate, currentTime
+      currentDate = new Date()
+      currentTime = currentDate.getHours() + ':' + currentDate.getMinutes()
       printer
         .print('\x1b\x52\x08') // 国際文字セットを「日本」へ
         .print('\x1b\x74\x01') // 拡張ASCIIテーブルを「カタカナ」へ
