@@ -198,6 +198,7 @@ function update() {
   log.silly('update()')
   io.sockets.emit('currentNo', currentNo)
   io.sockets.emit('bookableTime', getBookableTime())
+  io.sockets.emit('books', books)
 }
 
 /**

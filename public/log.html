@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Numbered Ticket Terminal : Log Viewer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/earlyaccess/mplus1p.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css?family=Share+Tech+Mono" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" crossorigin />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css" crossorigin />
+  <link rel="stylesheet" href="./css/log.css" />
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <!-- vue-devtools -->
+  <!-- <script src="http://0.0.0.0:8098"></script> -->
+  <script src="http://momentjs.com/downloads/moment.min.js"></script>
+</head>
+
+<body>
+  <div class="container">
+    <div id="exhibitorName">
+      <h2 class="title">{{ exhibitorName }}</h2>
+    </div>
+    <div id="exhibitionTitle">
+      <h1 class="title">{{ exhibitionTitle }}</h1>
+    </div>
+  </div>
+  <div class="container">
+    <div class="columns">
+      <div class="column is-three-fifths">
+        <div id="books">
+          <table class="table is-bordered is-striped is-hoverable is-fullwidth">
+            <thead>
+              <tr>
+                <th>no</th>
+                <th>bookedTime</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="book in books" v-bind:class=" currentNo == book.no ? 'is-selected' : 0 ">
+                <td v-if="book.no != 0">{{book.no}}</td>
+                <td v-if="book.no != 0">{{book.bookedTime}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="column">
+        <div id="currentNo">現在の体験者番号：{{ currentNo }}</div>
+        <div id="bookableTime">次に発券する整理券の体験予定時刻:{{ bookableTime }}</div>
+        <div id="currentTime">現在時刻:{{ currentTime }}</div>
+      </div>
+    </div>
+  </div>
+  <script src="js/socket.io.js"></script>
+  <script src="js/log.js"></script>
+</body>
+
+</html>
