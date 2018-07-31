@@ -6,25 +6,24 @@
 
 > Numbered Ticket Terminal
 
-- [NTT](#ntt)
-  - [How to Develop](#how-to-develop)
-    - [Requirements](#requirements)
-    - [Install Libraries](#install-libraries)
-  - [How to Build](#how-to-build)
-    - [for MacOS](#for-macos)
-    - [for Windows](#for-windows)
-  - [How to Deploy](#how-to-deploy)
-    - [Thermal Printer](#thermal-printer)
-    - [Settings](#settings)
-    - [On MediaWall](#on-mediawall)
-    - [From Office](#from-office)
-  - [How to Use](#how-to-use)
-    - [Operation Flow](#operation-flow)
-      - [Issuing Ticket](#issuing-ticket)
-      - [Instruction](#instruction)
-    - [Logging](#logging)
-      - [Database](#database)
-      - [Log](#log)
+- [How to Develop](#how-to-develop)
+  - [Requirements](#requirements)
+  - [Install Libraries](#install-libraries)
+- [How to Build](#how-to-build)
+  - [for MacOS](#for-macos)
+  - [for Windows](#for-windows)
+- [How to Deploy](#how-to-deploy)
+  - [Thermal Printer](#thermal-printer)
+  - [Settings](#settings)
+  - [On MediaWall](#on-mediawall)
+  - [From Office](#from-office)
+- [How to Use](#how-to-use)
+  - [Operation Flow](#operation-flow)
+    - [Issuing Ticket](#issuing-ticket)
+    - [Instruction](#instruction)
+  - [Logging](#logging)
+    - [Database](#database)
+    - [Log](#log)
 
 ## How to Develop
 
@@ -159,11 +158,11 @@ $ system_profiler SPUSBDataType
 
 [http://<IP_ADDRESS>:1997/log.html](http://<IP_ADDRESS>:1997/log.html)
 
-展示室の方で発券や体験が進むと自動的に表示が更新されます。
+発券や体験が進むと自動的に表示が更新されます。
 
 |WIDE|PORTRAIT|
 |:--:|:-:|
-|![](https://user-images.githubusercontent.com/40506652/43411823-48c16ac4-9466-11e8-9ef5-85fe30ca8e28.png)|![](https://user-images.githubusercontent.com/40506652/43412092-1b88cd26-9467-11e8-91fc-1ac288b79170.png)|
+|![WIDE](https://user-images.githubusercontent.com/40506652/43411823-48c16ac4-9466-11e8-9ef5-85fe30ca8e28.png)|![PORTRAIT](https://user-images.githubusercontent.com/40506652/43412092-1b88cd26-9467-11e8-91fc-1ac288b79170.png)|
 
 ## How to Use
 
@@ -174,7 +173,7 @@ $ system_profiler SPUSBDataType
 #### Issuing Ticket
 
 1.  体験希望者に作品体験の説明をする。
-2.  発券機の Print ボタンを押して発券する。
+1.  発券機の Print ボタンを押して発券する。
     * **現在の体験者がいない場合**は、そのまま作品体験案内へ。
     * **現在体験中の人がいる、もしくは先に予約している人がいる場合**は、予約券に記載された体験予定時刻の 5 分前には戻ってきてもらえるようお伝えする。
 

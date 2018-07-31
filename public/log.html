@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Numbered Ticket Terminal : Log Viewer</title>
+  <title>Numbered Ticket Terminal | Log</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://fonts.googleapis.com/earlyaccess/mplus1p.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css?family=Share+Tech+Mono" rel="stylesheet">
@@ -32,14 +32,14 @@
           <table class="table is-bordered is-striped is-hoverable is-fullwidth">
             <thead>
               <tr>
-                <th>no</th>
-                <th>bookedTime</th>
+                <th>体験者番号</th>
+                <th>予約時間</th>
               </tr>
             </thead>
             <tbody>
-              <tr v-for="book in books" v-bind:class=" currentNo == book.no ? 'is-selected' : 0 ">
-                <td v-if="book.no != 0">{{book.no}}</td>
-                <td v-if="book.no != 0">{{book.bookedTime}}</td>
+              <tr v-for="book in books" v-bind:class="currentNo == book.no ? 'is-selected' : 0">
+                <td v-if="book.no != 0">{{ book.no }}</td>
+                <td v-if="book.no != 0">{{ book.bookedTime }}</td>
               </tr>
             </tbody>
           </table>
