@@ -32,14 +32,16 @@
           <table class="table is-bordered is-striped is-hoverable is-fullwidth">
             <thead>
               <tr>
-                <th>no</th>
-                <th>bookedTime</th>
+                <th>No</th>
+                <th>体験予定時刻</th>
+                <th>発券時刻</th>
               </tr>
             </thead>
             <tbody>
               <tr v-for="book in books" v-bind:class=" currentNo == book.no ? 'is-selected' : 0 ">
                 <td v-if="book.no != 0">{{book.no}}</td>
                 <td v-if="book.no != 0">{{book.bookedTime}}</td>
+                <td v-if="book.no != 0">{{book.currentTime}}</td>
               </tr>
             </tbody>
           </table>

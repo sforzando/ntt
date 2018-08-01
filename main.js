@@ -78,7 +78,8 @@ function book() {
   }
   let book = {
     no: books.length,
-    bookedTime: bookableTime
+    bookedTime: bookableTime,
+    currentTime: moment().format('HH:mm')
   }
   books.push(book)
   if (moment(bookableTime, 'HH:mm').diff(moment()) < 3500) {
