@@ -163,7 +163,7 @@ $ system_profiler SPUSBDataType
 
 |WIDE|PORTRAIT|
 |:--:|:-:|
-|![](https://user-images.githubusercontent.com/40506652/43411823-48c16ac4-9466-11e8-9ef5-85fe30ca8e28.png)|![](https://user-images.githubusercontent.com/40506652/43412092-1b88cd26-9467-11e8-91fc-1ac288b79170.png)|
+|![](https://user-images.githubusercontent.com/40506652/43590459-fc2b015a-96ab-11e8-9a3e-270df33fa694.png)|![](https://user-images.githubusercontent.com/40506652/43590484-06e4958e-96ac-11e8-9128-ef9a7b0554af.png)|
 
 ## How to Use
 
@@ -174,7 +174,7 @@ $ system_profiler SPUSBDataType
 #### Issuing Ticket
 
 1.  体験希望者に作品体験の説明をする。
-2.  発券機の Print ボタンを押して発券する。
+1.  発券機の Print ボタンを押して発券する。
     * **現在の体験者がいない場合**は、そのまま作品体験案内へ。
     * **現在体験中の人がいる、もしくは先に予約している人がいる場合**は、予約券に記載された体験予定時刻の 5 分前には戻ってきてもらえるようお伝えする。
 

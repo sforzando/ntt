@@ -3,13 +3,6 @@
 /* globals moment */
 /* globals Vue */
 
-let settings = {
-  keyPrint: '',
-  keyNext: '',
-  keyReprint: '',
-  lastOrder: ''
-}
-
 const is_local =
   0 <= ['localhost', '127.0.0.1', '0.0.0.0'].indexOf(window.location.hostname)
 
@@ -51,12 +44,6 @@ socketio.on('books', msg => {
   booksList.books = msg
 })
 
-function update() {
-  socketio.emit('update', 'update', response => {
-    console.log('initial update:', response)
-  })
-}
-
 /**
  * Create Components w/ Vue
  */
@@ -83,7 +70,6 @@ const currentTime = new Vue({
     setInterval(() => {
       let now = moment()
       currentTime.currentTime = now.format('HH:mm')
-      update()
     }, 1000)
   }
 })
