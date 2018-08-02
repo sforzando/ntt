@@ -159,7 +159,7 @@ $ system_profiler SPUSBDataType
 
 [http://<IP_ADDRESS>:1997/log.html](http://<IP_ADDRESS>:1997/log.html)
 
-展示室の方で発券や体験が進むと自動的に表示が更新されます。
+発券や体験が進むと自動的に表示が更新されます。
 
 |WIDE|PORTRAIT|
 |:--:|:-:|
