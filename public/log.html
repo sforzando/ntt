@@ -17,38 +17,54 @@
 </head>
 
 <body>
-  <div class="container">
-    <div id="exhibitorName">
-      <h2 class="title">{{ exhibitorName }}</h2>
+  <div class="container is-fluid">
+    <div class="columns">
+      <div class="column">
+        <div id="exhibitorName">
+          <h2 class="title">{{ exhibitorName }}</h2>
+        </div>
+        <div id="exhibitionTitle">
+          <h1 class="title">{{ exhibitionTitle }}</h1>
+        </div>
+      </div>
     </div>
-    <div id="exhibitionTitle">
-      <h1 class="title">{{ exhibitionTitle }}</h1>
-    </div>
-  </div>
-  <div class="container">
     <div class="columns">
       <div class="column is-three-fifths">
         <div id="books">
           <table class="table is-bordered is-striped is-hoverable is-fullwidth">
             <thead>
               <tr>
-                <th>体験者番号</th>
-                <th>予約時間</th>
+                <th>No</th>
+                <th>体験予定時刻</th>
+                <th>発券時刻</th>
               </tr>
             </thead>
             <tbody>
-              <tr v-for="book in books" v-bind:class="currentNo == book.no ? 'is-selected' : 0">
-                <td v-if="book.no != 0">{{ book.no }}</td>
-                <td v-if="book.no != 0">{{ book.bookedTime }}</td>
+              <tr v-for="book in books" v-bind:class=" currentNo == book.no ? 'is-selected' : 0 ">
+                <td v-if="book.no != 0">{{book.no}}</td>
+                <td v-if="book.no != 0">{{book.bookedTime}}</td>
+                <td v-if="book.no != 0">{{book.currentTime}}</td>
               </tr>
             </tbody>
           </table>
         </div>
       </div>
       <div class="column">
-        <div id="currentNo">現在の体験者番号：{{ currentNo }}</div>
-        <div id="bookableTime">次に発券する整理券の体験予定時刻:{{ bookableTime }}</div>
-        <div id="currentTime">現在時刻:{{ currentTime }}</div>
+        <div class="card">
+          <div class="card-content">
+            <div id="currentNo">現在の体験者番号：{{ currentNo }}</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-content">
+            <div id="bookableTime">次に発券する整理券の体験予定時刻:{{ bookableTime }}</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-content">
+            <div id="currentTime">現在時刻:{{ currentTime }}</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

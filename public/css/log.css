@@ -2,10 +2,19 @@
 
 body {
   font-family: 'Mplus 1p', sans-serif;
-  margin: 5vh;
 }
 
-h1, h2 {
-  margin-bottom: 2vh;
+.container {
+  margin: 2vh;
+}
+
+.title {
+  font-size: x-large;
+  margin-bottom: 1vh;
+}
+
+.card-content {
+  margin-bottom: 1vh;
+  padding: 2vh;
 }
 
