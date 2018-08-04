@@ -41,9 +41,9 @@
             </thead>
             <tbody>
               <tr v-for="book in books" v-bind:class=" currentNo == book.no ? 'is-selected' : 0 ">
-                <td v-if="book.no != 0">{{book.no}}</td>
-                <td v-if="book.no != 0">{{book.bookedTime}}</td>
-                <td v-if="book.no != 0">{{book.currentTime}}</td>
+                <td>{{book.no}}</td>
+                <td>{{book.bookedTime}}</td>
+                <td>{{book.currentTime}}</td>
               </tr>
             </tbody>
           </table>
