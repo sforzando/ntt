@@ -4,17 +4,10 @@ body {
   font-family: 'Mplus 1p', sans-serif;
 }
 
-.container {
-  margin: 2vh;
+.is-margin-1vh {
+  margin: 1vh;
 }
 
-.title {
-  font-size: x-large;
-  margin-bottom: 1vh;
-}
-
-.card-content {
-  margin-bottom: 1vh;
+.is-padding-2vh {
   padding: 2vh;
 }
-
