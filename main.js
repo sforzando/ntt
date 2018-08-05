@@ -78,7 +78,8 @@ function book() {
   }
   let book = {
     no: books.length,
-    bookedTime: bookableTime
+    bookedTime: bookableTime,
+    currentTime: moment().format('HH:mm')
   }
   books.push(book)
   if (moment(bookableTime, 'HH:mm').diff(moment()) < 3500) {
@@ -198,6 +199,7 @@ function update() {
   log.silly('update()')
   io.sockets.emit('currentNo', currentNo)
   io.sockets.emit('bookableTime', getBookableTime())
+  io.sockets.emit('books', books)
 }
 
 /**

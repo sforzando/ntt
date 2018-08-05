@@ -156,8 +156,13 @@ $ system_profiler SPUSBDataType
 
 ### From Office
 
-同上。
-ゆくゆく、発券ログ画面を実装する予定。
+[http://<IP_ADDRESS>:1997/log.html](http://<IP_ADDRESS>:1997/log.html)
+
+発券や体験が進むと自動的に表示が更新されます。
+
+|WIDE|PORTRAIT|
+|:--:|:-:|
+|![](https://user-images.githubusercontent.com/40506652/43690375-b7da97aa-9943-11e8-9317-627e6be196d0.png)|![](https://user-images.githubusercontent.com/40506652/43690378-be6e3bda-9943-11e8-96b5-08b4d946405a.png)|
 
 ## How to Use
 
