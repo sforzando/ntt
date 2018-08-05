@@ -6,25 +6,24 @@
 
 > Numbered Ticket Terminal
 
-- [NTT](#ntt)
-  - [How to Develop](#how-to-develop)
-    - [Requirements](#requirements)
-    - [Install Libraries](#install-libraries)
-  - [How to Build](#how-to-build)
-    - [for MacOS](#for-macos)
-    - [for Windows](#for-windows)
-  - [How to Deploy](#how-to-deploy)
-    - [Thermal Printer](#thermal-printer)
-    - [Settings](#settings)
-    - [On MediaWall](#on-mediawall)
-    - [From Office](#from-office)
-  - [How to Use](#how-to-use)
-    - [Operation Flow](#operation-flow)
-      - [Issuing Ticket](#issuing-ticket)
-      - [Instruction](#instruction)
-    - [Logging](#logging)
-      - [Database](#database)
-      - [Log](#log)
+- [How to Develop](#how-to-develop)
+  - [Requirements](#requirements)
+  - [Install Libraries](#install-libraries)
+- [How to Build](#how-to-build)
+  - [for MacOS](#for-macos)
+  - [for Windows](#for-windows)
+- [How to Deploy](#how-to-deploy)
+  - [Thermal Printer](#thermal-printer)
+  - [Settings](#settings)
+  - [On MediaWall](#on-mediawall)
+  - [From Office](#from-office)
+- [How to Use](#how-to-use)
+  - [Operation Flow](#operation-flow)
+    - [Issuing Ticket](#issuing-ticket)
+    - [Instruction](#instruction)
+  - [Logging](#logging)
+    - [Database](#database)
+    - [Log](#log)
 
 ## How to Develop
 
@@ -163,7 +162,7 @@ $ system_profiler SPUSBDataType
 
 |WIDE|PORTRAIT|
 |:--:|:-:|
-|![](https://user-images.githubusercontent.com/40506652/43686244-2ad89898-98fd-11e8-8098-07bfc8be9420.png)|![](https://user-images.githubusercontent.com/40506652/43686250-37054c42-98fd-11e8-927a-a19c267a9674.png)|
+|![](https://user-images.githubusercontent.com/40506652/43690375-b7da97aa-9943-11e8-9317-627e6be196d0.png)|![](https://user-images.githubusercontent.com/40506652/43690378-be6e3bda-9943-11e8-96b5-08b4d946405a.png)|
 
 ## How to Use
 

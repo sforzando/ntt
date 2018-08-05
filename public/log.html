@@ -17,57 +17,59 @@
 </head>
 
 <body>
-  <div class="container is-fluid">
-    <div class="columns is-margin-1vh">
-      <div class="column">
-        <div id="exhibitorName">
-          <h2 class="title">{{ exhibitorName }}</h2>
+  <section class="section">
+    <div class="container is-fluid">
+      <div class="columns">
+        <div class="column">
+          <div id="exhibitorName">
+            <h2 class="title">{{ exhibitorName }}</h2>
+          </div>
+          <div id="exhibitionTitle">
+            <h1 class="title">{{ exhibitionTitle }}</h1>
+          </div>
         </div>
-        <div id="exhibitionTitle">
-          <h1 class="title">{{ exhibitionTitle }}</h1>
+      </div>
+      <div class="columns">
+        <div class="column is-three-fifths">
+          <div id="books">
+            <table class="table is-bordered is-striped is-hoverable is-fullwidth">
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>体験予定時刻</th>
+                  <th>発券時刻</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="book in books" v-bind:class=" currentNo == book.no ? 'is-selected' : 0 ">
+                  <td>{{book.no}}</td>
+                  <td>{{book.bookedTime}}</td>
+                  <td>{{book.currentTime}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="column">
+          <div class="card">
+            <div class="card-content">
+              <div id="currentNo">現在の体験者番号：{{ currentNo }}</div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-content">
+              <div id="bookableTime">次に発券する整理券の体験予定時刻:{{ bookableTime }}</div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-content">
+              <div id="currentTime">現在時刻:{{ currentTime }}</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    <div class="columns is-margin-1vh">
-      <div class="column is-three-fifths">
-        <div id="books">
-          <table class="table is-bordered is-striped is-hoverable is-fullwidth">
-            <thead>
-              <tr>
-                <th>No</th>
-                <th>体験予定時刻</th>
-                <th>発券時刻</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="book in books" v-bind:class=" currentNo == book.no ? 'is-selected' : 0 ">
-                <td>{{book.no}}</td>
-                <td>{{book.bookedTime}}</td>
-                <td>{{book.currentTime}}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <div class="column">
-        <div class="card">
-          <div class="card-content is-margin-1vh is-padding-2vh">
-            <div id="currentNo">現在の体験者番号：{{ currentNo }}</div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-content is-margin-1vh is-padding-2vh">
-            <div id="bookableTime">次に発券する整理券の体験予定時刻:{{ bookableTime }}</div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-content is-margin-1vh is-padding-2vh">
-            <div id="currentTime">現在時刻:{{ currentTime }}</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  </section>
   <script src="js/socket.io.js"></script>
   <script src="js/log.js"></script>
 </body>
