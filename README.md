@@ -22,7 +22,6 @@
     - [Issuing Ticket](#issuing-ticket)
     - [Instruction](#instruction)
   - [Logging](#logging)
-    - [Database](#database)
     - [Log](#log)
 
 ## How to Develop
@@ -32,6 +31,10 @@
 * Node.js (8 or higher)
 
 ### Install Libraries
+
+```
+$ npm install
+```
 
 ## How to Build
 
@@ -150,7 +153,7 @@ $ system_profiler SPUSBDataType
 
 ### On MediaWall
 
-[http://<IP_ADDRESS>:1997/view/html](http://<IP_ADDRESS>:1997/view/html)を参照すれば、`PRINT/NEXT`キーが効かない安全な状態で閲覧可能。
+[http://<IP_ADDRESS>:1997/view.html](http://<IP_ADDRESS>:1997/view.html)を参照すれば、`PRINT/NEXT`キーが効かない安全な状態で閲覧可能。
 
 ※ Proxyの設定に注意。
 
@@ -194,10 +197,6 @@ $ system_profiler SPUSBDataType
 1.  次の体験者の作品へのご案内、および体験希望者への予約（発券）案内
 
 ### Logging
-
-#### Database
-
-Windows の場合、 `C:\Users\<USER>\AppData\Roaming\ntt` 、MacOS の場合、 `/Users/<USER>/Library/Application Support/ntt` にデータベース([NeDB](https://github.com/louischatriot/nedb))が日別で保存される。
 
 #### Log
 
