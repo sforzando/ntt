@@ -61,7 +61,7 @@
 					<key>COMMAND_STRING</key>
 					<string>#!/bin/zsh
 
-cd /Users/ntt/Documents/github.com/sforzando/ntt &amp;&amp; say "Change Directory"
+cd /Users/ntt/Documents/github.com/NTTICCTech/ntt &amp;&amp; say "Change Directory"
 
 npm start &amp; cliclick m:1920,1080</string>
 					<key>CheckedForUserDefaultShell</key>
@@ -176,7 +176,7 @@ npm start &amp; cliclick m:1920,1080</string>
 				<key>isViewVisible</key>
 				<true/>
 				<key>location</key>
-				<string>769.000000:253.000000</string>
+				<string>309.000000:253.000000</string>
 				<key>nibPath</key>
 				<string>/System/Library/Automator/Run Shell Script.action/Contents/Resources/English.lproj/main.nib</string>
 			</dict>
