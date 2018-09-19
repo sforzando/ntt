@@ -6,23 +6,24 @@
 
 > Numbered Ticket Terminal
 
-- [How to Develop](#how-to-develop)
-  - [Requirements](#requirements)
-  - [Install Libraries](#install-libraries)
-- [How to Build](#how-to-build)
-  - [for MacOS](#for-macos)
-  - [for Windows](#for-windows)
-- [How to Deploy](#how-to-deploy)
-  - [Thermal Printer](#thermal-printer)
-  - [Settings](#settings)
-  - [On MediaWall](#on-mediawall)
-  - [From Office](#from-office)
-- [How to Use](#how-to-use)
-  - [Operation Flow](#operation-flow)
-    - [Issuing Ticket](#issuing-ticket)
-    - [Instruction](#instruction)
-  - [Logging](#logging)
-    - [Log](#log)
+- [NTT](#ntt)
+  - [How to Develop](#how-to-develop)
+    - [Requirements](#requirements)
+    - [Install Libraries](#install-libraries)
+  - [How to Build](#how-to-build)
+    - [for MacOS](#for-macos)
+    - [for Windows](#for-windows)
+  - [How to Deploy](#how-to-deploy)
+    - [Thermal Printer](#thermal-printer)
+    - [Settings](#settings)
+    - [On MediaWall](#on-mediawall)
+    - [From Office](#from-office)
+  - [How to Use](#how-to-use)
+    - [Operation Flow](#operation-flow)
+      - [Issuing Ticket](#issuing-ticket)
+      - [Instruction](#instruction)
+    - [Logging](#logging)
+      - [Log](#log)
 
 ## How to Develop
 
@@ -200,4 +201,4 @@ $ system_profiler SPUSBDataType
 
 #### Log
 
-[Database](#database)と同じ場所に`*.txt`ファイルが日別で保存される。
+`~/Library/Application Support/ntt/log` に `*.txt` ファイルが日別で保存される。

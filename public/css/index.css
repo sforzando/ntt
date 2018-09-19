@@ -50,3 +50,11 @@ body {
   height: 77vh;
   font-weight: 800;
 }
+
+.modal-background {
+  background-color: rgba(255, 0, 0, 0.7);
+}
+
+.modal-content {
+  width: 80%;
+}
