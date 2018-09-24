@@ -52,7 +52,7 @@
     "build:mac": "electron-builder --mac --x64",
     "build:win": "electron-builder --win --x64",
     "format": "prettier-eslint \"src/**/*.js\"",
-    "preview": "static -a 0.0.0.0 -p 1997 -c 0 -H '{\"Access-Control-Allow-Origin\": \"*\"}' public",
+    "preview": "static -a 0.0.0.0 -p 1997 -c 0 -H '{\"Access-Control-Allow-Origin\": \"*\", \"Cache-Control\": \"no-cache, must-revalidate\"}' public",
     "precommit": "lint-staged",
     "start": "electron .",
     "start:development": "NODE_ENV=development electron .",

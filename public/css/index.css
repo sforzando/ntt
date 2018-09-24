@@ -1,10 +1,10 @@
 @charset 'utf-8';
 
 body {
-  cursor: none;
-  background-size: cover;
-  background-position: center;
   background-image: url('/image/index_background.png');
+  background-position: center;
+  background-size: cover;
+  cursor: none;
   font-family: 'Mplus 1p', sans-serif;
   overflow: hidden;
 }
@@ -34,21 +34,21 @@ body {
 }
 
 #status {
-  height: 20vh;
-  margin: auto;
-  display: flex;
-  justify-content: center;
   align-items: center;
+  display: flex;
+  height: 20vh;
+  justify-content: center;
+  margin: auto;
 }
 
 #left {
-  height: 77vh;
   font-weight: 800;
+  height: 77vh;
 }
 
 #right {
-  height: 77vh;
   font-weight: 800;
+  height: 77vh;
 }
 
 .modal-background {
@@ -56,5 +56,20 @@ body {
 }
 
 .modal-content {
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
+  margin-top: 20%;
+  padding: 50px;
   width: 80%;
+}
+
+.modal-japanese-instruction {
+  font-size: 4rem;
+  font-weight: 800;
+}
+
+.modal-english-instruction {
+  font-size: 3rem;
+  font-style: italic;
+  font-weight: 600;
 }
