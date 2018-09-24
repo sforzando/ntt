@@ -6,24 +6,21 @@
 
 > Numbered Ticket Terminal
 
-- [NTT](#ntt)
-  - [How to Develop](#how-to-develop)
-    - [Requirements](#requirements)
-    - [Install Libraries](#install-libraries)
-  - [How to Build](#how-to-build)
-    - [for MacOS](#for-macos)
-    - [for Windows](#for-windows)
-  - [How to Deploy](#how-to-deploy)
-    - [Thermal Printer](#thermal-printer)
-    - [Settings](#settings)
-    - [On MediaWall](#on-mediawall)
-    - [From Office](#from-office)
-  - [How to Use](#how-to-use)
-    - [Operation Flow](#operation-flow)
-      - [Issuing Ticket](#issuing-ticket)
-      - [Instruction](#instruction)
-    - [Logging](#logging)
-      - [Log](#log)
+- [How to Develop](#how-to-develop)
+  - [Requirements](#requirements)
+  - [Install Libraries](#install-libraries)
+- [How to Deploy](#how-to-deploy)
+  - [Thermal Printer](#thermal-printer)
+  - [Settings](#settings)
+  - [On MediaWall](#on-mediawall)
+    - [2018/09/24 追記](#20180924-%E8%BF%BD%E8%A8%98)
+  - [From Office](#from-office)
+- [How to Use](#how-to-use)
+  - [Operation Flow](#operation-flow)
+    - [Issuing Ticket](#issuing-ticket)
+    - [Instruction](#instruction)
+  - [Logging](#logging)
+    - [Log](#log)
 
 ## How to Develop
 
@@ -36,30 +33,6 @@
 ```
 $ npm install
 ```
-
-## How to Build
-
-### for MacOS
-
-```shell
-$ npm build:mac
-```
-
-* インストーラ
-  * MacOS: `build/NumberedTicketTerminal.dmg`
-* アプリケーション
-  * MacOS: `build/mac/NumberedTicketTerminal.app`
-
-### for Windows
-
-```shell
-$ npm build:win
-```
-
-* インストーラ
-  * Windows: `build\NumberedTicketTerminal Setup.exe`
-* アプリケーション
-  * Windows: `build\win\NumberedTicketTerminal.exe`
 
 ## How to Deploy
 
@@ -121,33 +94,33 @@ $ system_profiler SPUSBDataType
 }
 ```
 
-* "exhibitorName"
+* `exhibitorName`
   * 展示名
     * 改行は`\n`で指定する
-* "exhibitionTitle"
+* `exhibitionTitle`
   * 作家名
     * 改行は`\n`で指定する
-* "experienceTime"
+* `experienceTime`
   * 体験時間、単位は**分**
-* "keyNext"
+* `keyNext`
   * `Next`に割り当てるキー
     * cf. [KeyboardEvent.code](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/code)
-* "keyPrint"
+* `keyPrint`
   * `Print`に割り当てるキー
-* "keyReprint
+* `keyReprint`
   * `Reprint`に割り当てるキー
-* "lastOrder"
+* `lastOrder`
   * 最終受付時刻
     * 慣例では、`閉館時刻の5分前 - 体験時間`
-* "print_note"
+* `print_note`
   * 発券末尾に記載する特記事項
-* "port"
+* `port`
   * Web サーバ、Socket.IO サーバが起動するポート
-* "printer_vendorID"
+* `printer_vendorID`
   * サーマルプリンタの製造元 ID
     * MacOS の場合、前述の`system_profiler SPUSBDataType`コマンド、またはシステムレポートから照会可能
     * JSON は 16 進数を直接記載できないため、**ダブルクォート(=文字列)** している
-* "printer_productID"
+* `printer_productID`
   * サーマルプリンタの製品 ID
 
 ![system_report](https://user-images.githubusercontent.com/32637762/40765182-a023307c-64e6-11e8-8842-89ad9a920753.png)
@@ -156,7 +129,12 @@ $ system_profiler SPUSBDataType
 
 [http://<IP_ADDRESS>:1997/view.html](http://<IP_ADDRESS>:1997/view.html)を参照すれば、`PRINT/NEXT`キーが効かない安全な状態で閲覧可能。
 
-※ Proxyの設定に注意。
+※ Proxyの設定と、フォント「[M+](https://mplus-fonts.osdn.jp/about.html)」に注意。
+
+#### 2018/09/24 追記
+[http://<IP_ADDRESS>:1997/](http://<IP_ADDRESS>:1997/)へElectron以外からのアクセスされた場合、自動的に`PRINT/NEXT`キーが効かない状態になるようにしました。
+すなわち、他の端末からでも[http://<IP_ADDRESS>:1997/](http://<IP_ADDRESS>:1997/)を参照すれば良いようになりました。
+互換性のために`view.html`は残してありますが、`index.html`と全く同一です。
 
 ### From Office
 
@@ -177,7 +155,7 @@ $ system_profiler SPUSBDataType
 #### Issuing Ticket
 
 1.  体験希望者に作品体験の説明をする。
-1.  発券機の Print ボタンを押して発券する。
+2.  発券機の Print ボタンを押して発券する。
     * **現在の体験者がいない場合**は、そのまま作品体験案内へ。
     * **現在体験中の人がいる、もしくは先に予約している人がいる場合**は、予約券に記載された体験予定時刻の 5 分前には戻ってきてもらえるようお伝えする。
 

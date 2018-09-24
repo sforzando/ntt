@@ -58,6 +58,7 @@ socketio.on('currentNo', msg => {
   currentNo.currentNo = msg
 })
 socketio.on('bookableTime', msg => {
+  modal.isActive = msg == 'END'
   bookableTime.bookableTime = msg
 })
 
@@ -67,20 +68,23 @@ function update() {
   })
 }
 
-/**
- * Keyboard Events
- */
-window.addEventListener('keyup', e => {
-  console.info(e)
-  if (is_local) {
-    socketio.json.emit('message', { code: e.code }, response => {
-      console.log('socket.io response:', response)
-      play_ok()
-    })
-  } else {
-    play_ng()
-  }
-})
+if (window.location.hostname == '0.0.0.0') {
+  // Access From Electron
+  /**
+   * Add Keyboard Events
+   */
+  window.addEventListener('keyup', e => {
+    console.info(e)
+    if (is_local) {
+      socketio.json.emit('message', { code: e.code }, response => {
+        console.log('socket.io response:', response)
+        play_ok()
+      })
+    } else {
+      play_ng()
+    }
+  })
+}
 
 /**
  * Create Components w/ Vue
@@ -110,5 +114,12 @@ const currentTime = new Vue({
       currentTime.currentTime = now.format('HH:mm')
       update()
     }, 1000)
+  }
+})
+
+const modal = new Vue({
+  el: '#modal',
+  data: {
+    isActive: false
   }
 })
