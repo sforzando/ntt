@@ -52,13 +52,14 @@ body {
 }
 
 .modal-background {
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(255, 255, 255, 0.01);
 }
 
 .modal-content {
   background-color: rgba(255, 255, 255, 0.8);
-  border-radius: 10px;
-  margin-top: 30%;
+  border-radius: 6px;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(0, 0, 0, 0.1);
+  margin-top: 35%;
   padding: 50px;
   width: 80%;
 }
