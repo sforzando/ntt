@@ -8,12 +8,12 @@ const path = require('path')
 const { app, BrowserWindow, Electron, powerSaveBlocker } = require('electron')
 const log = require('electron-log')
 log.transports.console.level = 'debug'
-log.transports.file.level = 'debug'
-log.transports.file.file = path.join(
-  app.getPath('userData'),
-  'log',
-  'ntt_' + moment().format('YYYYMMDDddd') + '.txt'
-)
+// log.transports.file.level = 'debug'
+// log.transports.file.file = path.join(
+//   app.getPath('userData'),
+//   'log',
+//   'ntt_' + moment().format('YYYYMMDDddd') + '.txt'
+// )
 
 let settings = JSON.parse(
   fs.readFileSync(path.join(app.getPath('desktop'), 'ntt_settings.json'))

@@ -68,6 +68,17 @@
       </div>
     </div>
   </section>
+  <div id="modal" class="modal" v-bind:class="{'is-active': isActive}">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+      <p class="modal-japanese-instruction">
+        本日の予約は終了しました。
+      </p>
+      <p class="modal-english-instruction">
+        All reservation are full booked for today.
+      </p>
+    </div>
+  </div>
   <audio id="sound_ok" preload="auto">
     <source src="./sound/se_ok.wav" />
   </audio>

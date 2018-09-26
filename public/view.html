@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Numbered Ticket Terminal | View</title>
+  <title>Numbered Ticket Terminal</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://fonts.googleapis.com/earlyaccess/mplus1p.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css?family=Share+Tech+Mono" rel="stylesheet">
@@ -68,6 +68,17 @@
       </div>
     </div>
   </section>
+  <div id="modal" class="modal" v-bind:class="{'is-active': isActive}">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+      <p class="modal-japanese-instruction">
+        本日の予約は終了しました。
+      </p>
+      <p class="modal-english-instruction">
+        All reservation are full booked for today.
+      </p>
+    </div>
+  </div>
   <audio id="sound_ok" preload="auto">
     <source src="./sound/se_ok.wav" />
   </audio>
@@ -75,7 +86,7 @@
     <source src="./sound/se_ng.wav" />
   </audio>
   <script src="js/socket.io.js"></script>
-  <script src="js/view.js"></script>
+  <script src="js/index.js"></script>
 </body>
 
 </html>
